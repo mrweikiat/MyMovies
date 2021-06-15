@@ -1,6 +1,8 @@
 package com.example.mymovies.ui.favourites
 
+import android.content.Intent
 import android.os.Bundle
+import android.telecom.Call
 import android.view.LayoutInflater
 import android.view.MenuItem
 import android.view.View
@@ -9,9 +11,11 @@ import android.widget.AdapterView
 import android.widget.GridView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.mymovies.MyFavouriteAdapter
 import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentFavouritesBinding
+import com.example.mymovies.ui.notifications.NotificationsFragment
 import com.google.android.material.snackbar.Snackbar
 
 class FavouritesFragment : Fragment() {
@@ -77,7 +81,7 @@ class FavouritesFragment : Fragment() {
 
         gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
             // Write code to perform action when item is clicked.
-            Snackbar.make(requireView(), "Clicked", Snackbar.LENGTH_SHORT).show()
+            view.findNavController().navigate(R.id.action_navigation_favourites_to_navigation_details)
         }
 
         return root

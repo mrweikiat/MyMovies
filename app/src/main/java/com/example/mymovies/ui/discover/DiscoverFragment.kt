@@ -7,6 +7,7 @@ import android.widget.GridView
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import com.example.mymovies.MainAdapter
 import com.example.mymovies.R
@@ -75,8 +76,11 @@ class DiscoverFragment : Fragment() {
         val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
 
         gridView.adapter = mainAdapter
-        gridView.onItemClickListener =
 
+        gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
+            // Write code to perform action when item is clicked.
+            view.findNavController().navigate(R.id.action_navigation_discover_to_navigation_details)
+        }
 
         return root
     }
