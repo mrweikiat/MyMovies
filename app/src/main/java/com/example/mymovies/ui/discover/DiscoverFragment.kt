@@ -25,26 +25,15 @@ class DiscoverFragment : Fragment() {
     private lateinit var gridView: GridView
 
     private var BASE_URL = "https://api.themoviedb.org/3/movie/"
+    private var image_URL = "https://image.tmdb.org/t/p/original"
     private val api_key = "a20f630ca428f9f3ad3d5f506f8e5101"
     private val language = "en-US"
     private val page = "1"
 
-
-    // dummy data for movies
     var movieNames = arrayListOf<String>()
 
     // dummy images for movies
-    private var movieImages = intArrayOf(
-        R.drawable.ic_launcher_background,R.drawable.ic_launcher_background,R.drawable.ic_launcher_background,
-        R.drawable.ic_notifications_black_24dp,R.drawable.ic_notifications_black_24dp,R.drawable.ic_notifications_black_24dp,
-        R.drawable.ic_notifications_black_24dp,R.drawable.ic_notifications_black_24dp,R.drawable.ic_notifications_black_24dp,
-        R.drawable.ic_notifications_black_24dp,R.drawable.ic_notifications_black_24dp,R.drawable.ic_notifications_black_24dp,
-        R.drawable.ic_notifications_black_24dp,R.drawable.ic_notifications_black_24dp,R.drawable.ic_notifications_black_24dp,
-        R.drawable.ic_notifications_black_24dp,R.drawable.ic_notifications_black_24dp,R.drawable.ic_notifications_black_24dp,
-        R.drawable.ic_notifications_black_24dp,R.drawable.ic_notifications_black_24dp,R.drawable.ic_notifications_black_24dp,
-        R.drawable.ic_notifications_black_24dp,R.drawable.ic_notifications_black_24dp,R.drawable.ic_notifications_black_24dp,
-    )
-
+    private var movieImages = arrayListOf<String>()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -63,44 +52,8 @@ class DiscoverFragment : Fragment() {
 
         // for options sorting
         setHasOptionsMenu(true)
-
-
-
-        val retrofit = Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(BASE_URL)
-            .build()
-
-        val service = retrofit.create(ApiInterface::class.java)
-        val call = service.getMovies(api_key, language, page)
-
-        call.enqueue(object : Callback<Movies> {
-            override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
-                if (response.code() == 200) {
-                    val movies = response.body()!!
-
-                    var listOfMovies = movies.results
-
-                    for (movie in listOfMovies) {
-                        movieNames.add(movie.originalTitle!!)
-
-                    }
-
-                    gridView = root.findViewById(R.id.gridView)
-                    val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
-                    gridView.adapter = mainAdapter
-                    gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
-                        // Write code to perform action when item is clicked.
-                        view.findNavController().navigate(R.id.action_navigation_discover_to_navigation_details)
-                    }
-
-                }
-            }
-            override fun onFailure(call: Call<Movies>, t: Throwable) {
-                Snackbar.make(requireView(), "error loading movies", Snackbar.LENGTH_SHORT).show()
-            }
-        })
-
+        // default page
+        getPopularPage(root)
 
 
         return root
@@ -137,5 +90,45 @@ class DiscoverFragment : Fragment() {
         }
     }
 
+    // function to get default page to show on discover fragment
+    private fun getPopularPage(root: View) {
+
+        val retrofit = Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(BASE_URL)
+            .build()
+
+        val service = retrofit.create(ApiInterface::class.java)
+        val call = service.getMovies(api_key, language, page)
+
+        call.enqueue(object : Callback<Movies> {
+            override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
+                if (response.code() == 200) {
+                    val movies = response.body()!!
+
+                    var listOfMovies = movies.results
+
+                    for (movie in listOfMovies) {
+                        movieNames.add(movie.originalTitle!!)
+                        val path = image_URL + movie.poster!!
+                        movieImages.add(path)
+                    }
+
+                    gridView = root.findViewById(R.id.gridView)
+                    val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
+                    gridView.adapter = mainAdapter
+                    gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
+                        // Write code to perform action when item is clicked.
+                        view.findNavController().navigate(R.id.action_navigation_discover_to_navigation_details)
+                    }
+
+                }
+            }
+            override fun onFailure(call: Call<Movies>, t: Throwable) {
+                Snackbar.make(requireView(), "error loading movies", Snackbar.LENGTH_SHORT).show()
+            }
+        })
+
+    }
 
 }

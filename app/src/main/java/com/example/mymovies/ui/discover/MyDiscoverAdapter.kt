@@ -1,18 +1,20 @@
 package com.example.mymovies.ui.discover
 
 import android.content.Context
+import android.net.Uri
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.example.mymovies.R
 
 internal class MainAdapter(
     private val context: DiscoverFragment,
     private val numbersInWords: ArrayList<String>,
-    private val numberImage: IntArray
+    private val numberImage: ArrayList<String>
 ) :
     BaseAdapter() {
     private var layoutInflater: LayoutInflater? = null
@@ -39,7 +41,14 @@ internal class MainAdapter(
         }
         imageView = convertView!!.findViewById(R.id.imageView)
         textView = convertView.findViewById(R.id.textView)
-        imageView.setImageResource(R.drawable.ic_notifications_black_24dp)
+
+        var image = numberImage[position]
+
+        // load img using glide
+        Glide.with(imageView)
+            .load(image)
+            .into(imageView)
+
         textView.text = numbersInWords[position]
         return convertView
     }

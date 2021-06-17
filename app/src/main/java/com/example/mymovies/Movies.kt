@@ -13,6 +13,8 @@ class Movies {
 class Movie {
     @SerializedName("adult")
     var adult: String? = null
+    @SerializedName("id")
+    var movie_id : Int? = 0
     @SerializedName("original_title")
     var originalTitle: String? = null
     @SerializedName("overview")
