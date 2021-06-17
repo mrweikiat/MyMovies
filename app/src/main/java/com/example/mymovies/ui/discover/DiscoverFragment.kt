@@ -4,15 +4,19 @@ import android.os.Bundle
 import android.view.*
 import android.widget.AdapterView
 import android.widget.GridView
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.findNavController
-import com.example.mymovies.MainAdapter
+import com.example.mymovies.ApiInterface
+import com.example.mymovies.Movies
 import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentDiscoverBinding
 import com.google.android.material.snackbar.Snackbar
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
+import retrofit2.Retrofit
+import retrofit2.converter.gson.GsonConverterFactory
 
 class DiscoverFragment : Fragment() {
 
@@ -20,17 +24,14 @@ class DiscoverFragment : Fragment() {
     private var _binding: FragmentDiscoverBinding? = null
     private lateinit var gridView: GridView
 
+    private var BASE_URL = "https://api.themoviedb.org/3/movie/"
+    private val api_key = "a20f630ca428f9f3ad3d5f506f8e5101"
+    private val language = "en-US"
+    private val page = "1"
+
+
     // dummy data for movies
-    private var movieNames = arrayOf(
-        "movie 1", "movie 2", "movie 3",
-        "movie 4", "movie 5", "movie 6",
-        "movie 7","movie 8","movie 9",
-        "movie 1","movie 1","movie 1",
-        "movie 1","movie 1","movie 1",
-        "movie 1","movie 1","movie 1",
-        "movie 1","movie 1","movie 1",
-        "movie 1","movie 1","movie 1"
-    )
+    var movieNames = arrayListOf<String>()
 
     // dummy images for movies
     private var movieImages = intArrayOf(
@@ -60,27 +61,47 @@ class DiscoverFragment : Fragment() {
         _binding = FragmentDiscoverBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        //val textView: TextView = binding.textDiscover
-
-        //discoverViewModel.text.observe(viewLifecycleOwner, Observer {
-            //textView.text = it
-        //})
-
         // for options sorting
         setHasOptionsMenu(true)
 
 
-        gridView = root.findViewById(R.id.gridView)
 
-        // adapter for movie list
-        val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
+        val retrofit = Retrofit.Builder()
+            .addConverterFactory(GsonConverterFactory.create())
+            .baseUrl(BASE_URL)
+            .build()
 
-        gridView.adapter = mainAdapter
+        val service = retrofit.create(ApiInterface::class.java)
+        val call = service.getMovies(api_key, language, page)
 
-        gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
-            // Write code to perform action when item is clicked.
-            view.findNavController().navigate(R.id.action_navigation_discover_to_navigation_details)
-        }
+        call.enqueue(object : Callback<Movies> {
+            override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
+                if (response.code() == 200) {
+                    val movies = response.body()!!
+
+                    var listOfMovies = movies.results
+
+                    for (movie in listOfMovies) {
+                        movieNames.add(movie.originalTitle!!)
+
+                    }
+
+                    gridView = root.findViewById(R.id.gridView)
+                    val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
+                    gridView.adapter = mainAdapter
+                    gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
+                        // Write code to perform action when item is clicked.
+                        view.findNavController().navigate(R.id.action_navigation_discover_to_navigation_details)
+                    }
+
+                }
+            }
+            override fun onFailure(call: Call<Movies>, t: Throwable) {
+                Snackbar.make(requireView(), "error loading movies", Snackbar.LENGTH_SHORT).show()
+            }
+        })
+
+
 
         return root
     }

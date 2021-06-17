@@ -1,4 +1,4 @@
-package com.example.mymovies
+package com.example.mymovies.ui.discover
 
 import android.content.Context
 import android.view.LayoutInflater
@@ -7,11 +7,11 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
-import com.example.mymovies.ui.discover.DiscoverFragment
+import com.example.mymovies.R
 
 internal class MainAdapter(
     private val context: DiscoverFragment,
-    private val numbersInWords: Array<String>,
+    private val numbersInWords: ArrayList<String>,
     private val numberImage: IntArray
 ) :
     BaseAdapter() {
@@ -27,10 +27,7 @@ internal class MainAdapter(
     override fun getItemId(position: Int): Long {
         return 0
     }
-    override fun getView(
-        position: Int,
-        convertView: View?,
-        parent: ViewGroup
+    override fun getView(position: Int, convertView: View?, parent: ViewGroup
     ): View? {
         var convertView = convertView
         if (layoutInflater == null) {
@@ -42,7 +39,7 @@ internal class MainAdapter(
         }
         imageView = convertView!!.findViewById(R.id.imageView)
         textView = convertView.findViewById(R.id.textView)
-        imageView.setImageResource(numberImage[position])
+        imageView.setImageResource(R.drawable.ic_notifications_black_24dp)
         textView.text = numbersInWords[position]
         return convertView
     }

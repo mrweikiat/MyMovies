@@ -6,9 +6,19 @@ import androidx.lifecycle.ViewModel
 
 class DiscoverViewModel : ViewModel() {
 
+    private var _movies = MutableLiveData<ArrayList<String>>().apply {
+        value = arrayListOf()
+    }
+
     private val _text = MutableLiveData<String>().apply {
         value = "This is Discover Fragment"
     }
-    val text: LiveData<String> = _text
+
+   fun getMovies(arr: ArrayList<String>) : ArrayList<String> {
+
+       return arr
+
+   }
+
 
 }
