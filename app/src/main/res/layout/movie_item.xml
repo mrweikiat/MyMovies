@@ -15,12 +15,15 @@
         android:textAlignment="center"
         android:gravity="center"
         android:id="@+id/textView"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="20sp"
         android:layout_marginTop="10dp"
         android:text="Numbers"
         android:layout_marginBottom="10dp"
         android:textColor="@color/white"
-        android:textSize="12sp"
+        android:autoSizeTextType="uniform"
+        android:autoSizeMaxTextSize="24sp"
+        android:autoSizeMinTextSize="8sp"
+        android:autoSizeStepGranularity="2sp"
         android:fontFamily="sans-serif"/>
 </LinearLayout>

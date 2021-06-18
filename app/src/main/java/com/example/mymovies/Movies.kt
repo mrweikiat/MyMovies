@@ -21,5 +21,7 @@ class Movie {
     var overview: String? = null
     @SerializedName("poster_path")
     var poster: String? = null
+    @SerializedName("title")
+    var title: String? = null
 
 }

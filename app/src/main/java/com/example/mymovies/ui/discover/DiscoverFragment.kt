@@ -52,7 +52,7 @@ class DiscoverFragment : Fragment() {
             viewLifecycleOwner,
             Observer { newMovieData ->
                 for (movie in newMovieData) {
-                    movieNames.add(movie.originalTitle!!)
+                    movieNames.add(movie.title!!)
                     val path = image_URL + movie.poster!!
                     movieImages.add(path)
                 }
@@ -62,11 +62,6 @@ class DiscoverFragment : Fragment() {
         gridView = root.findViewById(R.id.gridView)
         val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
         gridView.adapter = mainAdapter
-
-
-
-
-
 
         gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
 
