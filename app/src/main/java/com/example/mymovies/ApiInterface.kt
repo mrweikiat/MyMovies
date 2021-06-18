@@ -9,4 +9,7 @@ interface ApiInterface {
     @GET("popular?")
     fun getMovies(@Query("api_key")api_key: String, @Query("language")language: String, @Query("page")page: String) : Call<Movies>
 
+    @GET("top_rated?")
+    fun getTopRated(@Query("api_key")api_key: String, @Query("language")language: String, @Query("page")page: String): Call<Movies>
+
 }

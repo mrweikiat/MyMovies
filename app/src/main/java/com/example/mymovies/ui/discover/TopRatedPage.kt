@@ -10,17 +10,14 @@ import retrofit2.Response
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 
-object PopularPage {
-
+object TopRatedPage {
     var moviesData = MutableLiveData<ArrayList<Movie>>()
     private var BASE_URL = "https://api.themoviedb.org/3/movie/"
     private val api_key = "a20f630ca428f9f3ad3d5f506f8e5101"
     private val language = "en-US"
     private val pages = arrayOf("1", "2", "3")
 
-    // function to get default page to show on discover fragment
-    fun getPopularPage(): MutableLiveData<ArrayList<Movie>>? {
-
+    fun getTopRatedPage(): MutableLiveData<ArrayList<Movie>>? {
         val retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BASE_URL)
@@ -30,7 +27,9 @@ object PopularPage {
 
         // get multiple pages at once
         for (i in 0 until pages.size) {
-            val call = service.getMovies(api_key, language, pages[i])
+            val call = service.getMovies(
+                api_key,
+                language, pages[i])
 
             call.enqueue(object : Callback<Movies> {
                 override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
@@ -44,7 +43,7 @@ object PopularPage {
                             anotherListOfMovies.addAll(listOfMovies)
                             moviesData.value = anotherListOfMovies
                         } else {
-                            anotherListOfMovies.addAll(moviesData.value!!)
+                            anotherListOfMovies.addAll(PopularPage.moviesData.value!!)
                             anotherListOfMovies.addAll(listOfMovies)
                             moviesData.value = anotherListOfMovies
                         }
@@ -57,6 +56,7 @@ object PopularPage {
         }
 
         return moviesData
+
     }
 
 

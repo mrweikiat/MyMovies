@@ -19,15 +19,9 @@ class DiscoverFragment : Fragment() {
     private var _binding: FragmentDiscoverBinding? = null
     private lateinit var gridView: GridView
 
-    private var BASE_URL = "https://api.themoviedb.org/3/movie/"
     private var image_URL = "https://image.tmdb.org/t/p/original"
-    private val api_key = "a20f630ca428f9f3ad3d5f506f8e5101"
-    private val language = "en-US"
-    private val page = "1"
 
     var movieNames = arrayListOf<String>()
-
-    // dummy images for movies
     private var movieImages = arrayListOf<String>()
 
     // This property is only valid between onCreateView and
@@ -92,7 +86,7 @@ class DiscoverFragment : Fragment() {
                 return true
             }
             R.id.sort_top_rated ->{
-                Snackbar.make(requireView(), "sorting by top rated", Snackbar.LENGTH_LONG).show()
+                Snackbar.make(requireView(), "sorting by top rated", Snackbar.LENGTH_SHORT).show()
                 return true
             }
             R.id.sort_now_playing ->{

@@ -25,5 +25,6 @@
         android:autoSizeMaxTextSize="24sp"
         android:autoSizeMinTextSize="8sp"
         android:autoSizeStepGranularity="2sp"
-        android:fontFamily="sans-serif"/>
+        android:fontFamily="monospace"
+        android:background="@color/black"/>
 </LinearLayout>
