@@ -27,7 +27,7 @@
 
     <fragment
         android:id="@+id/navigation_details"
-        android:name="com.example.mymovies.ui.notifications.NotificationsFragment"
+        android:name="com.example.mymovies.ui.MovieDetails.MovieDetailsFragment"
         android:label="fragment_notifications"
         tools:layout="@layout/fragment_notifications" />
 

@@ -1,10 +1,7 @@
 package com.example.mymovies.ui.favourites
 
-import android.content.Intent
 import android.os.Bundle
-import android.telecom.Call
 import android.view.LayoutInflater
-import android.view.MenuItem
 import android.view.View
 import android.view.ViewGroup
 import android.widget.AdapterView
@@ -15,8 +12,6 @@ import androidx.navigation.findNavController
 import com.example.mymovies.MyFavouriteAdapter
 import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentFavouritesBinding
-import com.example.mymovies.ui.notifications.NotificationsFragment
-import com.google.android.material.snackbar.Snackbar
 
 class FavouritesFragment : Fragment() {
 

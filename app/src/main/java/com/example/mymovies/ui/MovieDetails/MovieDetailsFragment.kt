@@ -1,19 +1,17 @@
-package com.example.mymovies.ui.notifications
+package com.example.mymovies.ui.MovieDetails
 
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.TextView
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentNotificationsBinding
+import com.example.mymovies.ui.discover.DiscoverFragment
 
-class NotificationsFragment : Fragment() {
+class MovieDetailsFragment : Fragment() {
 
-    private lateinit var notificationsViewModel: NotificationsViewModel
+    private lateinit var movieDetailsViewModel: MovieDetailsViewModel
     private var _binding: FragmentNotificationsBinding? = null
 
     // This property is only valid between onCreateView and
@@ -25,11 +23,13 @@ class NotificationsFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        notificationsViewModel =
-            ViewModelProvider(this).get(NotificationsViewModel::class.java)
+        movieDetailsViewModel =
+            ViewModelProvider(this).get(MovieDetailsViewModel::class.java)
 
         _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
         val root: View = binding.root
+
+
 
         return root
     }

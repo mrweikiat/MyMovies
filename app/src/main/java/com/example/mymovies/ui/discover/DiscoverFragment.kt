@@ -5,18 +5,13 @@ import android.view.*
 import android.widget.AdapterView
 import android.widget.GridView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
-import com.example.mymovies.ApiInterface
-import com.example.mymovies.Movies
 import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentDiscoverBinding
 import com.google.android.material.snackbar.Snackbar
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
+
 
 class DiscoverFragment : Fragment() {
 
@@ -52,8 +47,31 @@ class DiscoverFragment : Fragment() {
 
         // for options sorting
         setHasOptionsMenu(true)
-        // default page
-        getPopularPage(root)
+
+        discoverViewModel.getMovies()!!.observe(
+            viewLifecycleOwner,
+            Observer { newMovieData ->
+                for (movie in newMovieData) {
+                    movieNames.add(movie.originalTitle!!)
+                    val path = image_URL + movie.poster!!
+                    movieImages.add(path)
+                }
+            }
+        )
+
+        gridView = root.findViewById(R.id.gridView)
+        val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
+        gridView.adapter = mainAdapter
+
+
+
+
+
+
+        gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
+
+            view.findNavController().navigate(R.id.action_navigation_discover_to_navigation_details)
+        }
 
 
         return root
@@ -89,46 +107,4 @@ class DiscoverFragment : Fragment() {
             else -> super.onOptionsItemSelected(item)
         }
     }
-
-    // function to get default page to show on discover fragment
-    private fun getPopularPage(root: View) {
-
-        val retrofit = Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
-            .baseUrl(BASE_URL)
-            .build()
-
-        val service = retrofit.create(ApiInterface::class.java)
-        val call = service.getMovies(api_key, language, page)
-
-        call.enqueue(object : Callback<Movies> {
-            override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
-                if (response.code() == 200) {
-                    val movies = response.body()!!
-
-                    var listOfMovies = movies.results
-
-                    for (movie in listOfMovies) {
-                        movieNames.add(movie.originalTitle!!)
-                        val path = image_URL + movie.poster!!
-                        movieImages.add(path)
-                    }
-
-                    gridView = root.findViewById(R.id.gridView)
-                    val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
-                    gridView.adapter = mainAdapter
-                    gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
-                        // Write code to perform action when item is clicked.
-                        view.findNavController().navigate(R.id.action_navigation_discover_to_navigation_details)
-                    }
-
-                }
-            }
-            override fun onFailure(call: Call<Movies>, t: Throwable) {
-                Snackbar.make(requireView(), "error loading movies", Snackbar.LENGTH_SHORT).show()
-            }
-        })
-
-    }
-
 }
