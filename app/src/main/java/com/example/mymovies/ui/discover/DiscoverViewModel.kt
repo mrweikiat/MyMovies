@@ -12,6 +12,11 @@ class DiscoverViewModel : ViewModel() {
 
     var moviesData : MutableLiveData<ArrayList<Movie>>? = null
 
+    var sortByPopularity : Boolean = true // by default home page always shows popular movies
+    var sortByTopRated : Boolean = false
+    var sortByNowPlaying : Boolean = false
+
+
    fun getMovies(): LiveData<ArrayList<Movie>>? {
        moviesData = getPopularPage()
        return moviesData
@@ -31,7 +36,28 @@ class DiscoverViewModel : ViewModel() {
         moviesData = null
     }
 
+    fun setPopularityTrue() {
+        sortByPopularity = true
+    }
 
+    fun setPopularityFalse() {
+        sortByPopularity = false
+    }
 
+    fun setTopRatedTrue() {
+        sortByTopRated = true
+    }
+
+    fun setTopRatedFalse() {
+        sortByTopRated = false
+    }
+
+    fun setNowPlayingTrue() {
+        sortByNowPlaying= true
+    }
+
+    fun setNowPlayingFalse() {
+        sortByNowPlaying= false
+    }
 
 }

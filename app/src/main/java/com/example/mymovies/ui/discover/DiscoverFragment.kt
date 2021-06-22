@@ -1,5 +1,6 @@
 package com.example.mymovies.ui.discover
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.*
 import android.widget.AdapterView
@@ -10,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentDiscoverBinding
+import com.example.mymovies.ui.MovieDetails.MovieDetailsFragment
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -20,16 +22,6 @@ class DiscoverFragment : Fragment() {
     private lateinit var gridView: GridView
 
     private var image_URL = "https://image.tmdb.org/t/p/original"
-
-    private var movieNames = arrayListOf<String>()
-    private var movieImages = arrayListOf<String>()
-
-    // bool values for different sorting flags
-    // not yet implemented
-    private var sortByPopularity: Boolean = true
-    private var sortByTopRated: Boolean = false
-    private var sortByNowPlaying: Boolean = false
-
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -51,10 +43,8 @@ class DiscoverFragment : Fragment() {
         _binding = FragmentDiscoverBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        // empty the data struct
-        movieNames.clear()
-        movieImages.clear()
-        discoverViewModel.clearList()
+        var movieNames = ArrayList<String>()
+        var movieImages = ArrayList<String>()
 
         discoverViewModel.getMovies()!!.observe(
             viewLifecycleOwner,
@@ -76,7 +66,30 @@ class DiscoverFragment : Fragment() {
 
         gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
 
-            view.findNavController().navigate(R.id.action_navigation_discover_to_navigation_details)
+            //view.findNavController().navigate(R.id.action_navigation_discover_to_navigation_details)
+            val intent = Intent (activity, MovieDetailsFragment::class.java)
+            intent.putExtra("MOVIE_NAME", discoverViewModel
+                .moviesData
+                ?.value
+                ?.get(position)
+                ?.title
+                .toString())
+
+            intent.putExtra("MOVIE_IMAGE", discoverViewModel
+                .moviesData
+                ?.value
+                ?.get(position)
+                ?.poster
+                .toString())
+
+            intent.putExtra("MOVIE_DESCRIPTION", discoverViewModel
+                .moviesData
+                ?.value
+                ?.get(position)
+                ?.overview
+                .toString())
+
+            activity?.startActivity(intent)
         }
 
 
@@ -117,10 +130,10 @@ class DiscoverFragment : Fragment() {
     // fun to re-populate gridview to top rated movies
     private fun makeTopRatedMoviesList() {
 
-        // empty the data struct
-        movieNames.clear()
-        movieImages.clear()
         discoverViewModel.clearList()
+
+        var movieNames = ArrayList<String>()
+        var movieImages = ArrayList<String>()
 
         discoverViewModel.getTopRatedMovies()!!.observe(
             viewLifecycleOwner,
@@ -142,10 +155,10 @@ class DiscoverFragment : Fragment() {
 
     // fun to re-populate gridview to popular movies
     private fun makePopularMoviesList() {
-
-        movieNames.clear()
-        movieImages.clear()
         discoverViewModel.clearList()
+
+        var movieNames = ArrayList<String>()
+        var movieImages = ArrayList<String>()
 
         discoverViewModel.getMovies()!!.observe(
             viewLifecycleOwner,
@@ -165,10 +178,10 @@ class DiscoverFragment : Fragment() {
 
     // fun to re-populate gridview to popular movies
     private fun makeNowPlayingMoviesList() {
-
-        movieNames.clear()
-        movieImages.clear()
         discoverViewModel.clearList()
+
+        var movieNames = ArrayList<String>()
+        var movieImages = ArrayList<String>()
 
         discoverViewModel.getNowPlayingMovies()!!.observe(
             viewLifecycleOwner,

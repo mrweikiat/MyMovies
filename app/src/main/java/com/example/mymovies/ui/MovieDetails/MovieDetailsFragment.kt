@@ -1,41 +1,62 @@
 package com.example.mymovies.ui.MovieDetails
 
 import android.os.Bundle
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import android.widget.ImageView
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import androidx.appcompat.widget.AppCompatImageView
+import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentNotificationsBinding
-import com.example.mymovies.ui.discover.DiscoverFragment
+import androidx.appcompat.widget.Toolbar
+import androidx.core.net.toUri
+import com.bumptech.glide.Glide
+import com.google.android.material.appbar.CollapsingToolbarLayout
+import java.net.URI
 
-class MovieDetailsFragment : Fragment() {
+
+class MovieDetailsFragment : AppCompatActivity() {
 
     private lateinit var movieDetailsViewModel: MovieDetailsViewModel
     private var _binding: FragmentNotificationsBinding? = null
+
+    private var image_URL = "https://image.tmdb.org/t/p/original"
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        movieDetailsViewModel =
-            ViewModelProvider(this).get(MovieDetailsViewModel::class.java)
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
 
-        _binding = FragmentNotificationsBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        setContentView(R.layout.movies_details)
+        val toolbar = findViewById<Toolbar>(R.id.toolbar)
+        setSupportActionBar(toolbar)
+        supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        supportActionBar?.setDisplayShowHomeEnabled(true)
 
 
+        val movieName = intent.getStringExtra("MOVIE_NAME").toString()
+        val movieImagePath = intent.getStringExtra("MOVIE_IMAGE").toString()
 
-        return root
-    }
+        val toolbar_layout = findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)
+        toolbar_layout.title = movieName
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
+        var movieDetailsImage = findViewById<ImageView>(R.id.movie_details_image)
+
+        // load img using glide
+        Glide.with(this)
+            .load(image_URL + movieImagePath)
+            .into(movieDetailsImage)
+
+        val movieDescription: String = intent.getStringExtra("MOVIE_DESCRIPTION").toString()
+        val movie_description = findViewById<TextView>(R.id.movie_details_description)
+
+        if (movie_description != null) {
+            movie_description.text = movieDescription
+        }
+
+
+
     }
 }
