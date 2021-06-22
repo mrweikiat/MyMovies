@@ -107,8 +107,7 @@ class DiscoverFragment : Fragment() {
                 return true
             }
             R.id.sort_now_playing ->{
-                Snackbar.make(requireView(), "sorting by now playing", Snackbar.LENGTH_LONG).show()
-
+                makeNowPlayingMoviesList()
                 return true
             }
             else -> super.onOptionsItemSelected(item)
@@ -161,6 +160,28 @@ class DiscoverFragment : Fragment() {
 
         val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
         gridView.adapter = mainAdapter
-        
+
+    }
+
+    // fun to re-populate gridview to popular movies
+    private fun makeNowPlayingMoviesList() {
+
+        movieNames.clear()
+        movieImages.clear()
+        discoverViewModel.clearList()
+
+        discoverViewModel.getNowPlayingMovies()!!.observe(
+            viewLifecycleOwner,
+            Observer { newMovieData ->
+                for (movie in newMovieData) {
+                    movieNames.add(movie.title!!)
+                    val path = image_URL + movie.poster!!
+                    movieImages.add(path)
+                }
+            }
+        )
+
+        val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
+        gridView.adapter = mainAdapter
     }
 }

@@ -12,4 +12,7 @@ interface ApiInterface {
     @GET("top_rated?")
     fun getTopRated(@Query("api_key")api_key: String, @Query("language")language: String, @Query("page")page: String): Call<Movies>
 
+    @GET("now_playing?")
+    fun getNowPlaying(@Query("api_key")api_key: String, @Query("language")language: String, @Query("page")page: String): Call<Movies>
+
 }
