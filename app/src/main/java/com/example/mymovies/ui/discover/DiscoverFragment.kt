@@ -21,12 +21,24 @@ class DiscoverFragment : Fragment() {
 
     private var image_URL = "https://image.tmdb.org/t/p/original"
 
-    var movieNames = arrayListOf<String>()
+    private var movieNames = arrayListOf<String>()
     private var movieImages = arrayListOf<String>()
+
+    // bool values for different sorting flags
+    // not yet implemented
+    private var sortByPopularity: Boolean = true
+    private var sortByTopRated: Boolean = false
+    private var sortByNowPlaying: Boolean = false
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+
+    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -39,8 +51,10 @@ class DiscoverFragment : Fragment() {
         _binding = FragmentDiscoverBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        // for options sorting
-        setHasOptionsMenu(true)
+        // empty the data struct
+        movieNames.clear()
+        movieImages.clear()
+        discoverViewModel.clearList()
 
         discoverViewModel.getMovies()!!.observe(
             viewLifecycleOwner,
@@ -52,6 +66,9 @@ class DiscoverFragment : Fragment() {
                 }
             }
         )
+
+        // for options sorting
+        setHasOptionsMenu(true)
 
         gridView = root.findViewById(R.id.gridView)
         val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
@@ -82,18 +99,68 @@ class DiscoverFragment : Fragment() {
 
         return when (item.itemId) {
             R.id.sort_popular -> {
-                Snackbar.make(requireView(), "sorting by popular", Snackbar.LENGTH_SHORT).show()
+                makePopularMoviesList()
                 return true
             }
             R.id.sort_top_rated ->{
-                Snackbar.make(requireView(), "sorting by top rated", Snackbar.LENGTH_SHORT).show()
+                makeTopRatedMoviesList()
                 return true
             }
             R.id.sort_now_playing ->{
                 Snackbar.make(requireView(), "sorting by now playing", Snackbar.LENGTH_LONG).show()
+
                 return true
             }
             else -> super.onOptionsItemSelected(item)
         }
+    }
+
+    // fun to re-populate gridview to top rated movies
+    private fun makeTopRatedMoviesList() {
+
+        // empty the data struct
+        movieNames.clear()
+        movieImages.clear()
+        discoverViewModel.clearList()
+
+        discoverViewModel.getTopRatedMovies()!!.observe(
+            viewLifecycleOwner,
+            Observer { newMovieData ->
+                for (movie in newMovieData) {
+                    movieNames.add(movie.title!!)
+                    val path = image_URL + movie.poster!!
+                    movieImages.add(path)
+                }
+            }
+        )
+
+        val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
+        gridView.adapter = mainAdapter
+
+
+
+    }
+
+    // fun to re-populate gridview to popular movies
+    private fun makePopularMoviesList() {
+
+        movieNames.clear()
+        movieImages.clear()
+        discoverViewModel.clearList()
+
+        discoverViewModel.getMovies()!!.observe(
+            viewLifecycleOwner,
+            Observer { newMovieData ->
+                for (movie in newMovieData) {
+                    movieNames.add(movie.title!!)
+                    val path = image_URL + movie.poster!!
+                    movieImages.add(path)
+                }
+            }
+        )
+
+        val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
+        gridView.adapter = mainAdapter
+        
     }
 }

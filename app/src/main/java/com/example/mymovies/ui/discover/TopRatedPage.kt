@@ -15,7 +15,8 @@ object TopRatedPage {
     private var BASE_URL = "https://api.themoviedb.org/3/movie/"
     private val api_key = "a20f630ca428f9f3ad3d5f506f8e5101"
     private val language = "en-US"
-    private val pages = arrayOf("1", "2", "3")
+    //private val pages = arrayOf("1", "2", "3")
+    private val pages = arrayOf("1")
 
     fun getTopRatedPage(): MutableLiveData<ArrayList<Movie>>? {
         val retrofit = Retrofit.Builder()
@@ -25,35 +26,20 @@ object TopRatedPage {
 
         val service = retrofit.create(ApiInterface::class.java)
 
-        // get multiple pages at once
-        for (i in 0 until pages.size) {
-            val call = service.getMovies(
-                api_key,
-                language, pages[i])
+        val call = service.getTopRated(api_key, language, pages[0])
 
-            call.enqueue(object : Callback<Movies> {
-                override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
-                    if (response.code() == 200) {
-                        val movies = response.body()!!
-
-                        var listOfMovies = movies.results
-                        var anotherListOfMovies = ArrayList<Movie>()
-
-                        if (moviesData.value == null) {
-                            anotherListOfMovies.addAll(listOfMovies)
-                            moviesData.value = anotherListOfMovies
-                        } else {
-                            anotherListOfMovies.addAll(PopularPage.moviesData.value!!)
-                            anotherListOfMovies.addAll(listOfMovies)
-                            moviesData.value = anotherListOfMovies
-                        }
-                    }
+        call.enqueue(object : Callback<Movies> {
+            override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
+                if (response.code() == 200) {
+                    val movies = response.body()!!
+                    moviesData.value = movies.results
                 }
-                override fun onFailure(call: Call<Movies>, t: Throwable) {
-                    //TODO (1) consider error message here to log
-                }
-            })
-        }
+
+            }
+            override fun onFailure(call: Call<Movies>, t: Throwable) {
+                //TODO (2) consider error message here to log
+            }
+        })
 
         return moviesData
 

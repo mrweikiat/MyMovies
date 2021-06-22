@@ -21,5 +21,9 @@ class DiscoverViewModel : ViewModel() {
         return moviesData
     }
 
+    fun clearList(){
+        moviesData = null
+    }
+
 
 }

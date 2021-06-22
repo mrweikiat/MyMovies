@@ -16,7 +16,8 @@ object PopularPage {
     private var BASE_URL = "https://api.themoviedb.org/3/movie/"
     private val api_key = "a20f630ca428f9f3ad3d5f506f8e5101"
     private val language = "en-US"
-    private val pages = arrayOf("1", "2", "3")
+    //private val pages = arrayOf("1", "2", "3")
+    private val pages = arrayOf("1")
 
     // function to get default page to show on discover fragment
     fun getPopularPage(): MutableLiveData<ArrayList<Movie>>? {
@@ -28,33 +29,21 @@ object PopularPage {
 
         val service = retrofit.create(ApiInterface::class.java)
 
-        // get multiple pages at once
-        for (i in 0 until pages.size) {
-            val call = service.getMovies(api_key, language, pages[i])
+        val call = service.getMovies(api_key, language, pages[0])
 
-            call.enqueue(object : Callback<Movies> {
-                override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
-                    if (response.code() == 200) {
-                        val movies = response.body()!!
+        call.enqueue(object : Callback<Movies> {
+            override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
+                if (response.code() == 200) {
+                    val movies = response.body()!!
 
-                        var listOfMovies = movies.results
-                        var anotherListOfMovies = ArrayList<Movie>()
+                    moviesData.value = movies.results
 
-                        if (moviesData.value == null) {
-                            anotherListOfMovies.addAll(listOfMovies)
-                            moviesData.value = anotherListOfMovies
-                        } else {
-                            anotherListOfMovies.addAll(moviesData.value!!)
-                            anotherListOfMovies.addAll(listOfMovies)
-                            moviesData.value = anotherListOfMovies
-                        }
-                    }
                 }
-                override fun onFailure(call: Call<Movies>, t: Throwable) {
-                    //TODO (1) consider error message here to log
-                }
-            })
-        }
+            }
+            override fun onFailure(call: Call<Movies>, t: Throwable) {
+                //TODO (1) consider error message here to log
+            }
+        })
 
         return moviesData
     }
