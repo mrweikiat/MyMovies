@@ -8,11 +8,9 @@ import android.widget.GridView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.navigation.findNavController
 import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentDiscoverBinding
 import com.example.mymovies.ui.MovieDetails.MovieDetailsFragment
-import com.google.android.material.snackbar.Snackbar
 
 
 class DiscoverFragment : Fragment() {
@@ -26,11 +24,6 @@ class DiscoverFragment : Fragment() {
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -75,11 +68,11 @@ class DiscoverFragment : Fragment() {
                 ?.title
                 .toString())
 
-            intent.putExtra("MOVIE_IMAGE", discoverViewModel
+            intent.putExtra("MOVIE_BACKDROP", discoverViewModel
                 .moviesData
                 ?.value
                 ?.get(position)
-                ?.poster
+                ?.backdrop
                 .toString())
 
             intent.putExtra("MOVIE_DESCRIPTION", discoverViewModel
@@ -87,6 +80,27 @@ class DiscoverFragment : Fragment() {
                 ?.value
                 ?.get(position)
                 ?.overview
+                .toString())
+
+            intent.putExtra("MOVIE_RATING", discoverViewModel
+                .moviesData
+                ?.value
+                ?.get(position)
+                ?.rating
+                .toString())
+
+            intent.putExtra("MOVIE_LANGUAGE", discoverViewModel
+                .moviesData
+                ?.value
+                ?.get(position)
+                ?.language
+                .toString())
+
+            intent.putExtra("MOVIE_RELEASE_DATE", discoverViewModel
+                .moviesData
+                ?.value
+                ?.get(position)
+                ?.releaseDate
                 .toString())
 
             activity?.startActivity(intent)

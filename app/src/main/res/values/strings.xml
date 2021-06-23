@@ -12,6 +12,9 @@
     <string name="options_top_rated">Top rated</string>
     <string name="options_now_playing">Now playing</string>
 
+    <string name="movie_details_overview">Overview</string>
+
+
     <string name="title_activity_layout_based_activity">LayoutBasedActivity</string>
     <string name="title_activity_scroll_based_activity">ScrollingActivity</string>
     <string name="large_text">
@@ -32,7 +35,6 @@
     </string>
     <string name="layout_based">Layout Based</string>
     <string name="scroll_based">Scroll Based</string>
-    <string name="msg_clicked">Hi! I am Clicked and my position is changed.</string>
 
 
 

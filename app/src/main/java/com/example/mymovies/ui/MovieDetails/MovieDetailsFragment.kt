@@ -4,14 +4,11 @@ import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import androidx.appcompat.widget.AppCompatImageView
 import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentNotificationsBinding
 import androidx.appcompat.widget.Toolbar
-import androidx.core.net.toUri
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.CollapsingToolbarLayout
-import java.net.URI
 
 
 class MovieDetailsFragment : AppCompatActivity() {
@@ -37,26 +34,55 @@ class MovieDetailsFragment : AppCompatActivity() {
 
 
         val movieName = intent.getStringExtra("MOVIE_NAME").toString()
-        val movieImagePath = intent.getStringExtra("MOVIE_IMAGE").toString()
+        val movieDescription: String = intent.getStringExtra("MOVIE_DESCRIPTION").toString()
+        val movieBackDropPath = intent.getStringExtra("MOVIE_BACKDROP").toString()
+        val movieRating = intent.getStringExtra("MOVIE_RATING").toString()
+        val movieLanguage = intent.getStringExtra("MOVIE_LANGUAGE").toString()
+        val movieReleaseDate = intent.getStringExtra("MOVIE_RELEASE_DATE").toString()
 
-        val toolbar_layout = findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)
-        toolbar_layout.title = movieName
+        setMovieRating(movieRating)
+        setBackDropImage(movieBackDropPath)
+        setMovieDescription(movieDescription)
+        setMovieLanguage(movieLanguage)
+        setMovieReleaseDate(movieReleaseDate)
 
-        var movieDetailsImage = findViewById<ImageView>(R.id.movie_details_image)
+
+        setToolBar(movieName)
+
+    }
+
+    private fun setMovieRating(movieRating: String) {
+        val movie_rating = findViewById<TextView>(R.id.movie_details_rating)
+        movie_rating.text = "Rating: $movieRating"
+    }
+
+    private fun setBackDropImage(movieBackDropPath: String) {
+        var movieDetailsImage = findViewById<ImageView>(R.id.movies_details_image)
 
         // load img using glide
         Glide.with(this)
-            .load(image_URL + movieImagePath)
+            .load(image_URL + movieBackDropPath)
             .into(movieDetailsImage)
-
-        val movieDescription: String = intent.getStringExtra("MOVIE_DESCRIPTION").toString()
-        val movie_description = findViewById<TextView>(R.id.movie_details_description)
-
-        if (movie_description != null) {
-            movie_description.text = movieDescription
-        }
-
-
-
     }
+
+    private fun setMovieDescription(movieDescription: String) {
+        val movie_description = findViewById<TextView>(R.id.movie_details_description)
+        movie_description.text = movieDescription
+    }
+
+    private fun setToolBar(movieName: String) {
+        val toolbar_layout = findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)
+        toolbar_layout.title = movieName
+    }
+
+    private fun setMovieLanguage(movieLanguage: String) {
+        val movie_language = findViewById<TextView>(R.id.movie_details_language)
+        movie_language.text = "Language: $movieLanguage"
+    }
+
+    private fun setMovieReleaseDate(movieReleaseDate: String) {
+        val movie_release_date = findViewById<TextView>(R.id.movie_details_release_date)
+        movie_release_date.text = "Release date: $movieReleaseDate"
+    }
+
 }

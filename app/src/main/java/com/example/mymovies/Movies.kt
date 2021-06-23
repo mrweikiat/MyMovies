@@ -13,6 +13,8 @@ class Movies {
 class Movie {
     @SerializedName("adult")
     var adult: String? = null
+    @SerializedName("backdrop_path")
+    var backdrop: String? = null
     @SerializedName("id")
     var movie_id : Int? = 0
     @SerializedName("original_title")
@@ -23,5 +25,11 @@ class Movie {
     var poster: String? = null
     @SerializedName("title")
     var title: String? = null
+    @SerializedName("vote_average")
+    var rating: String? = null
+    @SerializedName("original_language")
+    var language: String? = null
+    @SerializedName("release_date")
+    var releaseDate: String? = null
 
 }
