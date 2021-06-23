@@ -20,6 +20,7 @@ internal class MainAdapter(
     private var layoutInflater: LayoutInflater? = null
     private lateinit var imageView: ImageView
     private lateinit var textView: TextView
+
     override fun getCount(): Int {
         return numbersInWords.size
     }

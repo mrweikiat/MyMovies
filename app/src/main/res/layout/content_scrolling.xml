@@ -20,26 +20,42 @@
             android:paddingTop="10sp"
             android:paddingBottom="10sp">
 
-            <TextView
-                android:id="@+id/movie_details_rating"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rating:"
-                android:layout_margin="@dimen/text_margin"/>
+            <ImageView
+                android:id="@+id/movies_details_poster"
+                android:layout_width="100sp"
+                android:layout_height="150sp"
+                android:layout_margin="@dimen/text_margin"
+                android:src="@drawable/ic_launcher_background"/>
 
-            <TextView
-                android:id="@+id/movie_details_language"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Language:"
-                android:layout_margin="@dimen/text_margin"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_margin="@dimen/text_margin"
+                android:orientation="vertical">
 
-            <TextView
+                <TextView
+                    android:id="@+id/movie_details_rating"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Rating:"
+                    android:layout_margin="@dimen/text_margin"/>
+
+                <TextView
+                    android:id="@+id/movie_details_language"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Language:"
+                    android:layout_margin="@dimen/text_margin"/>
+
+                <TextView
                 android:id="@+id/movie_details_release_date"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Release Date:"
                 android:layout_margin="@dimen/text_margin"/>
+
+            </LinearLayout>
+
 
         </LinearLayout>
 
@@ -54,7 +70,8 @@
                 android:text="@string/movie_details_overview"
                 android:layout_margin="@dimen/text_margin"
                 android:textSize="24sp"
-                android:textColor="@color/black"/>
+                android:textColor="@color/black"
+                android:textStyle="bold"/>
 
             <TextView
                 android:id="@+id/movie_details_description"
@@ -62,6 +79,13 @@
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/text_margin"
                 android:text="@string/large_text" />
+
+            <TextView
+                android:id="@+id/movie_details_movie_id"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Movie id:"
+                android:layout_margin="@dimen/text_margin"/>
 
         </LinearLayout>
 

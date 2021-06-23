@@ -75,6 +75,13 @@ class DiscoverFragment : Fragment() {
                 ?.backdrop
                 .toString())
 
+            intent.putExtra("MOVIE_POSTER", discoverViewModel
+                .moviesData
+                ?.value
+                ?.get(position)
+                ?.poster
+                .toString())
+
             intent.putExtra("MOVIE_DESCRIPTION", discoverViewModel
                 .moviesData
                 ?.value
@@ -101,6 +108,13 @@ class DiscoverFragment : Fragment() {
                 ?.value
                 ?.get(position)
                 ?.releaseDate
+                .toString())
+
+            intent.putExtra("MOVIE_ID", discoverViewModel
+                .moviesData
+                ?.value
+                ?.get(position)
+                ?.movie_id
                 .toString())
 
             activity?.startActivity(intent)
@@ -157,13 +171,10 @@ class DiscoverFragment : Fragment() {
                     val path = image_URL + movie.poster!!
                     movieImages.add(path)
                 }
-            }
-        )
+            })
 
         val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
         gridView.adapter = mainAdapter
-
-
 
     }
 
@@ -177,13 +188,13 @@ class DiscoverFragment : Fragment() {
         discoverViewModel.getMovies()!!.observe(
             viewLifecycleOwner,
             Observer { newMovieData ->
+
                 for (movie in newMovieData) {
                     movieNames.add(movie.title!!)
                     val path = image_URL + movie.poster!!
                     movieImages.add(path)
                 }
-            }
-        )
+            })
 
         val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
         gridView.adapter = mainAdapter
@@ -192,6 +203,7 @@ class DiscoverFragment : Fragment() {
 
     // fun to re-populate gridview to popular movies
     private fun makeNowPlayingMoviesList() {
+
         discoverViewModel.clearList()
 
         var movieNames = ArrayList<String>()
@@ -205,8 +217,7 @@ class DiscoverFragment : Fragment() {
                     val path = image_URL + movie.poster!!
                     movieImages.add(path)
                 }
-            }
-        )
+            })
 
         val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
         gridView.adapter = mainAdapter

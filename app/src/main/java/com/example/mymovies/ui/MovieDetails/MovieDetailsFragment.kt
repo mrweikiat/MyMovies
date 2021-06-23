@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentNotificationsBinding
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.example.mymovies.ui.discover.DiscoverViewModel
 import com.google.android.material.appbar.CollapsingToolbarLayout
 
 
@@ -26,6 +28,9 @@ class MovieDetailsFragment : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
+        movieDetailsViewModel =
+            ViewModelProvider(this).get(MovieDetailsViewModel::class.java)
+
         setContentView(R.layout.movies_details)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
         setSupportActionBar(toolbar)
@@ -36,15 +41,22 @@ class MovieDetailsFragment : AppCompatActivity() {
         val movieName = intent.getStringExtra("MOVIE_NAME").toString()
         val movieDescription: String = intent.getStringExtra("MOVIE_DESCRIPTION").toString()
         val movieBackDropPath = intent.getStringExtra("MOVIE_BACKDROP").toString()
+        val moviePosterPath = intent.getStringExtra("MOVIE_POSTER").toString()
         val movieRating = intent.getStringExtra("MOVIE_RATING").toString()
         val movieLanguage = intent.getStringExtra("MOVIE_LANGUAGE").toString()
         val movieReleaseDate = intent.getStringExtra("MOVIE_RELEASE_DATE").toString()
+        val movieID = intent.getStringExtra("MOVIE_ID").toString()
+
+        movieDetailsViewModel.setMovieID(movieID)
+        movieDetailsViewModel.getSelectedMovieFromId()
 
         setMovieRating(movieRating)
         setBackDropImage(movieBackDropPath)
+        setPosterImage(moviePosterPath)
         setMovieDescription(movieDescription)
         setMovieLanguage(movieLanguage)
         setMovieReleaseDate(movieReleaseDate)
+        setMovieID(movieDetailsViewModel.getMovieID())
 
 
         setToolBar(movieName)
@@ -63,6 +75,14 @@ class MovieDetailsFragment : AppCompatActivity() {
         Glide.with(this)
             .load(image_URL + movieBackDropPath)
             .into(movieDetailsImage)
+    }
+
+    private fun setPosterImage(moviePosterPath: String) {
+        var movieDetailsPoster = findViewById<ImageView>(R.id.movies_details_poster)
+
+        Glide.with(this)
+            .load(image_URL + moviePosterPath)
+            .into(movieDetailsPoster)
     }
 
     private fun setMovieDescription(movieDescription: String) {
@@ -85,4 +105,8 @@ class MovieDetailsFragment : AppCompatActivity() {
         movie_release_date.text = "Release date: $movieReleaseDate"
     }
 
+    private fun setMovieID(movie_id: String?) {
+        val movie_ID = findViewById<TextView>(R.id.movie_details_movie_id)
+        movie_ID.text = "Movie ID: ${movie_id.toString()}"
+    }
 }

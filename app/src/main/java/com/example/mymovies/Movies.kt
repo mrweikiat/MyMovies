@@ -16,7 +16,7 @@ class Movie {
     @SerializedName("backdrop_path")
     var backdrop: String? = null
     @SerializedName("id")
-    var movie_id : Int? = 0
+    var movie_id : String? = null
     @SerializedName("original_title")
     var originalTitle: String? = null
     @SerializedName("overview")
