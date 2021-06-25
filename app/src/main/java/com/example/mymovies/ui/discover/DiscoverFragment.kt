@@ -177,7 +177,7 @@ class DiscoverFragment : Fragment() {
     private fun makeNowPlayingMoviesList() {
 
         discoverViewModel.clearList()
-        
+
         discoverViewModel.getNowPlayingMovies()!!.observe(
             viewLifecycleOwner,
             Observer { newMovieData ->

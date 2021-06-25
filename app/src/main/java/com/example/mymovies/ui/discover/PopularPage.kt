@@ -16,7 +16,7 @@ object PopularPage {
     private var BASE_URL = "https://api.themoviedb.org/3/movie/"
     private val api_key = "a20f630ca428f9f3ad3d5f506f8e5101"
     private val language = "en-US"
-    private val pages = arrayOf("1")
+    private val pages = arrayOf("1", "2", "3", "4", "5")
 
     // function to get default page to show on discover fragment
     fun getPopularPage(): MutableLiveData<ArrayList<Movie>>? {
@@ -34,7 +34,12 @@ object PopularPage {
                 override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
                     if (response.code() == 200) {
                         val movies = response.body()!!
-                        moviesData.value = movies.results
+
+                        val tempList1: ArrayList<Movie> = movies.results
+                        val tempList2 = ArrayList<Movie>()
+                        moviesData.value?.let { tempList2.addAll(it) }
+                        tempList2.addAll(tempList1)
+                        moviesData.value = tempList2
                     }
                 }
                 override fun onFailure(call: Call<Movies>, t: Throwable) {
@@ -43,7 +48,6 @@ object PopularPage {
             })
 
         }
-
 
 
         return moviesData

@@ -42,31 +42,17 @@ class FavouritesFragment : Fragment() {
         var movieNames = ArrayList<String>()
         var movieImages = ArrayList<String>()
 
-        favouritesViewModel.getMovies()!!.observe(
-            viewLifecycleOwner, Observer {
-                movieList ->
-                for (movie in movieList) {
-                    movieNames.add(movie.title!!)
-                    val path = image_URL + movie.poster!!
-                    movieImages.add(path)
-                }
+        gridView = root.findViewById(R.id.gridViewFavourite)
 
-                gridView = root.findViewById(R.id.gridViewFavourite)
+        // adapter for movie list
+        val mainAdapter = MyFavouriteAdapter(this@FavouritesFragment, movieNames, movieImages)
 
-                // adapter for movie list
-                val mainAdapter = MyFavouriteAdapter(this@FavouritesFragment, movieNames, movieImages)
+        gridView.adapter = mainAdapter
 
-                gridView.adapter = mainAdapter
-
-                gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
-                    val intent = Intent (activity, MovieDetailsFragment::class.java)
-                    activity?.startActivity(intent)
-                }
-
-            }
-        )
-
-
+        gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
+            val intent = Intent (activity, MovieDetailsFragment::class.java)
+            activity?.startActivity(intent)
+        }
 
         return root
     }

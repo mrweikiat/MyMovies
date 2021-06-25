@@ -16,8 +16,7 @@ object NowPlayingPage {
     private var BASE_URL = "https://api.themoviedb.org/3/movie/"
     private val api_key = "a20f630ca428f9f3ad3d5f506f8e5101"
     private val language = "en-US"
-    //private val pages = arrayOf("1", "2", "3")
-    private val pages = arrayOf("1", "2")
+    private val pages = arrayOf("1", "2", "3", "4", "5")
 
     // function to get default page to show on discover fragment
     fun getNowPlayingPage(): MutableLiveData<ArrayList<Movie>>? {

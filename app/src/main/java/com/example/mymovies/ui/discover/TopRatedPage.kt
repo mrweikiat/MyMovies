@@ -15,8 +15,7 @@ object TopRatedPage {
     private var BASE_URL = "https://api.themoviedb.org/3/movie/"
     private val api_key = "a20f630ca428f9f3ad3d5f506f8e5101"
     private val language = "en-US"
-    //private val pages = arrayOf("1", "2", "3")
-    private val pages = arrayOf("1")
+    private val pages = arrayOf("1", "2", "3", "4", "5")
 
     fun getTopRatedPage(): MutableLiveData<ArrayList<Movie>>? {
         val retrofit = Retrofit.Builder()
@@ -26,20 +25,28 @@ object TopRatedPage {
 
         val service = retrofit.create(ApiInterface::class.java)
 
-        val call = service.getTopRated(api_key, language, pages[0])
+        for (i in pages.indices) {
+            val call = service.getTopRated(api_key, language, pages[i])
 
-        call.enqueue(object : Callback<Movies> {
-            override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
-                if (response.code() == 200) {
-                    val movies = response.body()!!
-                    moviesData.value = movies.results
+            call.enqueue(object : Callback<Movies> {
+                override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
+                    if (response.code() == 200) {
+                        val movies = response.body()!!
+
+                        val tempList1: ArrayList<Movie> = movies.results
+                        val tempList2 = ArrayList<Movie>()
+                        moviesData.value?.let { tempList2.addAll(it) }
+                        tempList2.addAll(tempList1)
+                        moviesData.value = tempList2
+                    }
                 }
+                override fun onFailure(call: Call<Movies>, t: Throwable) {
+                    //TODO (2) consider error message here to log
+                }
+            })
+        }
 
-            }
-            override fun onFailure(call: Call<Movies>, t: Throwable) {
-                //TODO (2) consider error message here to log
-            }
-        })
+
 
         return moviesData
 
