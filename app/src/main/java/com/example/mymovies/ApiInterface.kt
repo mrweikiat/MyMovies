@@ -7,7 +7,7 @@ import retrofit2.http.Path
 
 interface ApiInterface {
 
-    @GET("popular?")
+    @GET("popular")
     fun getMovies(@Query("api_key")api_key: String, @Query("language")language: String, @Query("page")page: String) : Call<Movies>
 
     @GET("top_rated?")
@@ -16,7 +16,7 @@ interface ApiInterface {
     @GET("now_playing?")
     fun getNowPlaying(@Query("api_key")api_key: String, @Query("language")language: String, @Query("page")page: String): Call<Movies>
 
-    @GET("/movie/{movie_id}?")
+    @GET("movie/{movie_id}")
     fun getMovieUsingId(@Path("movie_id")movie_id: Int, @Query("api_key")api_key: String, @Query("language")language: String): Call<Movie>
 
 }

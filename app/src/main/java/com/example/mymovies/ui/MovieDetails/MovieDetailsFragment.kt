@@ -15,6 +15,7 @@ import com.bumptech.glide.Glide
 import com.example.mymovies.ui.favourites.FavouritesViewModel
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
+import com.example.mymovies.ui.MovieDetails.GetMovieFromId.getMovieFromId
 
 
 class MovieDetailsFragment : AppCompatActivity() {
@@ -66,10 +67,11 @@ class MovieDetailsFragment : AppCompatActivity() {
         var _movieID = movieID.toInt()
 
         var button = findViewById<Button>(R.id.add_to_favourites)
+        val movie = getMovieFromId(_movieID)
 
         button.setOnClickListener {
-            favouritesViewModel.getMovie(_movieID)
-            Snackbar.make(it, "HELLO", Snackbar.LENGTH_LONG).show()
+
+            Snackbar.make(it, movie.value?.title.toString(), Snackbar.LENGTH_LONG).show()
         }
 
 

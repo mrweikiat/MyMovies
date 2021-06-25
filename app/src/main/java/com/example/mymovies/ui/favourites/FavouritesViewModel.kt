@@ -11,10 +11,8 @@ class FavouritesViewModel : ViewModel() {
 
     var movies: ArrayList<Movie>? = null
 
-    fun getMovie(movieID: String) {
-        var temp = getMovieFromId(movieID)
-        movies?.add(temp)
-        println(temp.title.toString())
+    fun getMovie(movieID: Int) {
+
 
     }
 }
