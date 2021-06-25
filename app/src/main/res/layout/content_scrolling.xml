@@ -87,6 +87,13 @@
                 android:text="Movie id:"
                 android:layout_margin="@dimen/text_margin"/>
 
+            <Button
+                android:id="@+id/add_to_favourites"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:text="Add to favourites"/>
+
         </LinearLayout>
 
 

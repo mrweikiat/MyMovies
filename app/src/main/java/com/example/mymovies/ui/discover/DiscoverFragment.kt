@@ -47,78 +47,78 @@ class DiscoverFragment : Fragment() {
                     val path = image_URL + movie.poster!!
                     movieImages.add(path)
                 }
+                gridView = root.findViewById(R.id.gridView)
+                val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
+                gridView.adapter = mainAdapter
+
+                gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
+
+                    //view.findNavController().navigate(R.id.action_navigation_discover_to_navigation_details)
+                    val intent = Intent (activity, MovieDetailsFragment::class.java)
+                    // TODO try to pass as a json
+
+                    intent.putExtra("MOVIE_NAME", discoverViewModel
+                        .moviesData
+                        ?.value
+                        ?.get(position)
+                        ?.title
+                        .toString())
+
+                    intent.putExtra("MOVIE_BACKDROP", discoverViewModel
+                        .moviesData
+                        ?.value
+                        ?.get(position)
+                        ?.backdrop
+                        .toString())
+
+                    intent.putExtra("MOVIE_POSTER", discoverViewModel
+                        .moviesData
+                        ?.value
+                        ?.get(position)
+                        ?.poster
+                        .toString())
+
+                    intent.putExtra("MOVIE_DESCRIPTION", discoverViewModel
+                        .moviesData
+                        ?.value
+                        ?.get(position)
+                        ?.overview
+                        .toString())
+
+                    intent.putExtra("MOVIE_RATING", discoverViewModel
+                        .moviesData
+                        ?.value
+                        ?.get(position)
+                        ?.rating
+                        .toString())
+
+                    intent.putExtra("MOVIE_LANGUAGE", discoverViewModel
+                        .moviesData
+                        ?.value
+                        ?.get(position)
+                        ?.language
+                        .toString())
+
+                    intent.putExtra("MOVIE_RELEASE_DATE", discoverViewModel
+                        .moviesData
+                        ?.value
+                        ?.get(position)
+                        ?.releaseDate
+                        .toString())
+
+                    intent.putExtra("MOVIE_ID", discoverViewModel
+                        .moviesData
+                        ?.value
+                        ?.get(position)
+                        ?.movie_id
+                        .toString())
+
+                    activity?.startActivity(intent)
+                }
+                // for options sorting
+                setHasOptionsMenu(true)
             }
         )
-
-        // for options sorting
-        setHasOptionsMenu(true)
-
-        gridView = root.findViewById(R.id.gridView)
-        val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
-        gridView.adapter = mainAdapter
-
-        gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
-
-            //view.findNavController().navigate(R.id.action_navigation_discover_to_navigation_details)
-            val intent = Intent (activity, MovieDetailsFragment::class.java)
-            intent.putExtra("MOVIE_NAME", discoverViewModel
-                .moviesData
-                ?.value
-                ?.get(position)
-                ?.title
-                .toString())
-
-            intent.putExtra("MOVIE_BACKDROP", discoverViewModel
-                .moviesData
-                ?.value
-                ?.get(position)
-                ?.backdrop
-                .toString())
-
-            intent.putExtra("MOVIE_POSTER", discoverViewModel
-                .moviesData
-                ?.value
-                ?.get(position)
-                ?.poster
-                .toString())
-
-            intent.putExtra("MOVIE_DESCRIPTION", discoverViewModel
-                .moviesData
-                ?.value
-                ?.get(position)
-                ?.overview
-                .toString())
-
-            intent.putExtra("MOVIE_RATING", discoverViewModel
-                .moviesData
-                ?.value
-                ?.get(position)
-                ?.rating
-                .toString())
-
-            intent.putExtra("MOVIE_LANGUAGE", discoverViewModel
-                .moviesData
-                ?.value
-                ?.get(position)
-                ?.language
-                .toString())
-
-            intent.putExtra("MOVIE_RELEASE_DATE", discoverViewModel
-                .moviesData
-                ?.value
-                ?.get(position)
-                ?.releaseDate
-                .toString())
-
-            intent.putExtra("MOVIE_ID", discoverViewModel
-                .moviesData
-                ?.value
-                ?.get(position)
-                ?.movie_id
-                .toString())
-
-            activity?.startActivity(intent)
-        }
 
 
         return root
@@ -171,11 +171,9 @@ class DiscoverFragment : Fragment() {
                     val path = image_URL + movie.poster!!
                     movieImages.add(path)
                 }
+                val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
+                gridView.adapter = mainAdapter
             })
-
-        val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
-        gridView.adapter = mainAdapter
-
     }
 
     // fun to re-populate gridview to popular movies
@@ -194,11 +192,9 @@ class DiscoverFragment : Fragment() {
                     val path = image_URL + movie.poster!!
                     movieImages.add(path)
                 }
+                val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
+                gridView.adapter = mainAdapter
             })
-
-        val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
-        gridView.adapter = mainAdapter
-
     }
 
     // fun to re-populate gridview to popular movies
@@ -217,9 +213,8 @@ class DiscoverFragment : Fragment() {
                     val path = image_URL + movie.poster!!
                     movieImages.add(path)
                 }
+                val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
+                gridView.adapter = mainAdapter
             })
-
-        val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
-        gridView.adapter = mainAdapter
     }
 }

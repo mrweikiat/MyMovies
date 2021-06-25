@@ -9,11 +9,12 @@ import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
 import com.bumptech.glide.Glide
+import com.example.mymovies.Movie
 import com.example.mymovies.R
 
 internal class MainAdapter(
     private val context: DiscoverFragment,
-    private val numbersInWords: ArrayList<String>,
+    private val numberInWords: ArrayList<String>,
     private val numberImage: ArrayList<String>
 ) :
     BaseAdapter() {
@@ -22,7 +23,7 @@ internal class MainAdapter(
     private lateinit var textView: TextView
 
     override fun getCount(): Int {
-        return numbersInWords.size
+        return numberInWords.size
     }
     override fun getItem(position: Int): Any? {
         return null
@@ -50,7 +51,7 @@ internal class MainAdapter(
             .load(image)
             .into(imageView)
 
-        textView.text = numbersInWords[position]
+        textView.text = numberInWords[position]
         return convertView
     }
 }

@@ -16,7 +16,7 @@ interface ApiInterface {
     @GET("now_playing?")
     fun getNowPlaying(@Query("api_key")api_key: String, @Query("language")language: String, @Query("page")page: String): Call<Movies>
 
-    @GET("/movies/{movie_id}")
-    fun getMovieFromId(@Path("movie_id")movie_id: String, @Query("api_key")api_key: String, @Query("language")language: String): Call<Movie>
+    @GET("/movie/{movie_id}?")
+    fun getMovieUsingId(@Path("movie_id")movie_id: Int, @Query("api_key")api_key: String, @Query("language")language: String): Call<Movie>
 
 }

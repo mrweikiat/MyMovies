@@ -1,21 +1,28 @@
 package com.example.mymovies.ui.MovieDetails
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentNotificationsBinding
 import androidx.appcompat.widget.Toolbar
+import androidx.lifecycle.LifecycleOwner
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.example.mymovies.ui.discover.DiscoverViewModel
+import com.example.mymovies.ui.favourites.FavouritesViewModel
 import com.google.android.material.appbar.CollapsingToolbarLayout
+import com.google.android.material.snackbar.Snackbar
 
 
 class MovieDetailsFragment : AppCompatActivity() {
 
     private lateinit var movieDetailsViewModel: MovieDetailsViewModel
+
+    private lateinit var favouritesViewModel: FavouritesViewModel
+
     private var _binding: FragmentNotificationsBinding? = null
 
     private var image_URL = "https://image.tmdb.org/t/p/original"
@@ -28,8 +35,8 @@ class MovieDetailsFragment : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        movieDetailsViewModel =
-            ViewModelProvider(this).get(MovieDetailsViewModel::class.java)
+        favouritesViewModel =
+            ViewModelProvider(this).get(FavouritesViewModel::class.java)
 
         setContentView(R.layout.movies_details)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)
@@ -38,6 +45,7 @@ class MovieDetailsFragment : AppCompatActivity() {
         supportActionBar?.setDisplayShowHomeEnabled(true)
 
 
+        val movieID = intent.getStringExtra("MOVIE_ID").toString()
         val movieName = intent.getStringExtra("MOVIE_NAME").toString()
         val movieDescription: String = intent.getStringExtra("MOVIE_DESCRIPTION").toString()
         val movieBackDropPath = intent.getStringExtra("MOVIE_BACKDROP").toString()
@@ -45,10 +53,6 @@ class MovieDetailsFragment : AppCompatActivity() {
         val movieRating = intent.getStringExtra("MOVIE_RATING").toString()
         val movieLanguage = intent.getStringExtra("MOVIE_LANGUAGE").toString()
         val movieReleaseDate = intent.getStringExtra("MOVIE_RELEASE_DATE").toString()
-        val movieID = intent.getStringExtra("MOVIE_ID").toString()
-
-        movieDetailsViewModel.setMovieID(movieID)
-        movieDetailsViewModel.getSelectedMovieFromId()
 
         setMovieRating(movieRating)
         setBackDropImage(movieBackDropPath)
@@ -56,10 +60,18 @@ class MovieDetailsFragment : AppCompatActivity() {
         setMovieDescription(movieDescription)
         setMovieLanguage(movieLanguage)
         setMovieReleaseDate(movieReleaseDate)
-        setMovieID(movieDetailsViewModel.getMovieID())
-
-
+        setMovieID(movieID)
         setToolBar(movieName)
+
+        var _movieID = movieID.toInt()
+
+        var button = findViewById<Button>(R.id.add_to_favourites)
+
+        button.setOnClickListener {
+            favouritesViewModel.getMovie(_movieID)
+            Snackbar.make(it, "HELLO", Snackbar.LENGTH_LONG).show()
+        }
+
 
     }
 

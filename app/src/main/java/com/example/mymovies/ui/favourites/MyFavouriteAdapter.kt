@@ -11,8 +11,8 @@ import com.example.mymovies.ui.favourites.FavouritesFragment
 
 internal class MyFavouriteAdapter(
     private val context: FavouritesFragment,
-    private val numbersInWords: Array<String>,
-    private val numberImage: IntArray
+    private val numbersInWords: ArrayList<String>,
+    private val numberImage: ArrayList<String>
 ) :
     BaseAdapter() {
     private var layoutInflater: LayoutInflater? = null
@@ -42,7 +42,6 @@ internal class MyFavouriteAdapter(
         }
         imageView = convertView!!.findViewById(R.id.imageView)
         textView = convertView.findViewById(R.id.textView)
-        imageView.setImageResource(numberImage[position])
         textView.text = numbersInWords[position]
 
 

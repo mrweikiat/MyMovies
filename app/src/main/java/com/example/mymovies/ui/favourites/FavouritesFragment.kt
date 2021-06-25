@@ -21,30 +21,7 @@ class FavouritesFragment : Fragment() {
     private var _binding: FragmentFavouritesBinding? = null
 
     private lateinit var gridView: GridView
-
-    // dummy data for movies
-    private var movieNames = arrayOf(
-        "movie 1", "movie 2", "movie 3",
-        "movie 4", "movie 5", "movie 6",
-        "movie 7","movie 8","movie 9",
-        "movie 1","movie 1","movie 1",
-        "movie 1","movie 1","movie 1",
-        "movie 1","movie 1","movie 1",
-        "movie 1","movie 1","movie 1",
-        "movie 1","movie 1","movie 1"
-    )
-
-    // dummy images for movies
-    private var movieImages = intArrayOf(
-        R.drawable.ic_launcher_background, R.drawable.ic_launcher_background, R.drawable.ic_launcher_background,
-        R.drawable.ic_notifications_black_24dp, R.drawable.ic_notifications_black_24dp, R.drawable.ic_notifications_black_24dp,
-        R.drawable.ic_notifications_black_24dp, R.drawable.ic_notifications_black_24dp, R.drawable.ic_notifications_black_24dp,
-        R.drawable.ic_notifications_black_24dp, R.drawable.ic_notifications_black_24dp, R.drawable.ic_notifications_black_24dp,
-        R.drawable.ic_notifications_black_24dp, R.drawable.ic_notifications_black_24dp, R.drawable.ic_notifications_black_24dp,
-        R.drawable.ic_notifications_black_24dp, R.drawable.ic_notifications_black_24dp, R.drawable.ic_notifications_black_24dp,
-        R.drawable.ic_notifications_black_24dp, R.drawable.ic_notifications_black_24dp, R.drawable.ic_notifications_black_24dp,
-        R.drawable.ic_notifications_black_24dp, R.drawable.ic_notifications_black_24dp, R.drawable.ic_notifications_black_24dp,
-    )
+    private var image_URL = "https://image.tmdb.org/t/p/original"
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -61,13 +38,20 @@ class FavouritesFragment : Fragment() {
         _binding = FragmentFavouritesBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
+        var movieNames = ArrayList<String>()
+        var movieImages = ArrayList<String>()
 
 
+        /**
+         * val movieList = favouritesViewModel.getFavouriteMovies()
 
-        //val textView: TextView = binding.textFavourites
-        //favouritesViewModel.text.observe(viewLifecycleOwner, Observer {
-            //textView.text = it
-        //})
+        for (movie in movieList) {
+        movieNames.add(movie.title.toString())
+        val str = image_URL + movie.poster.toString()
+        movieImages.add(str)
+        }
+         */
+
 
         gridView = root.findViewById(R.id.gridViewFavourite)
 

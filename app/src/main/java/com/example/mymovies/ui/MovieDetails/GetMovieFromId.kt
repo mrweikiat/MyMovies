@@ -15,11 +15,12 @@ import retrofit2.converter.gson.GsonConverterFactory
 object GetMovieFromId {
 
     var movie = MutableLiveData<Movie>()
-    val BASE_URL = "https://api.themoviedb.org/3/"
+    var _movie : Movie? = null
+    val BASE_URL = "https://api.themoviedb.org/3/movie/"
     private val api_key = "a20f630ca428f9f3ad3d5f506f8e5101"
     private val language = "en-US"
 
-    fun getMovieFromId(movieId: String): MutableLiveData<Movie>? {
+    fun getMovieFromId(movieId: Int): Movie {
 
         val retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
@@ -28,13 +29,15 @@ object GetMovieFromId {
 
         val service = retrofit.create(ApiInterface::class.java)
 
-        val call = service.getMovieFromId(movieId, api_key, language)
+        val call = service.getMovieUsingId(movieId, api_key, language)
 
         call.enqueue(object : Callback<Movie> {
             override fun onResponse(call: Call<Movie>, response: Response<Movie>) {
                 if (response.code() == 200) {
                     val movies = response.body()!!
+                    println(movies.title.toString())
                     movie.value = movies
+
                 }
             }
             override fun onFailure(call: Call<Movie>, t: Throwable) {
@@ -42,7 +45,7 @@ object GetMovieFromId {
             }
         })
 
-        return movie
+        return movie.value!!
 
     }
 

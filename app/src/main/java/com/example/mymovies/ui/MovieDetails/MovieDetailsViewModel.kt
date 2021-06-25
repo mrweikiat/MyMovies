@@ -11,17 +11,4 @@ class MovieDetailsViewModel : ViewModel() {
     private var movieId : String? = null
     private var currMovie: MutableLiveData<Movie>? = null
 
-    fun getSelectedMovieFromId(): LiveData<Movie> {
-        currMovie = getMovieFromId(movieId.toString())
-        return currMovie!!
-    }
-
-    fun setMovieID(movie_id: String) {
-        movieId = movie_id
-    }
-
-    fun getMovieID(): String? {
-        return movieId
-    }
-
 }
