@@ -9,10 +9,14 @@ import com.example.mymovies.ui.MovieDetails.GetMovieFromId.movie
 
 class FavouritesViewModel : ViewModel() {
 
-    var movies: ArrayList<Movie>? = null
+    var movies: MutableLiveData<ArrayList<Movie>>? = null
 
-    fun getMovie(movieID: Int) {
+    fun addMovie(movieID: Int) {
+        val movie = getMovieFromId(movieID)
+        movies?.value?.add(movie.value!!)
+    }
 
-
+    fun getMovies(): LiveData<ArrayList<Movie>>? {
+        return movies
     }
 }

@@ -55,6 +55,9 @@ class MovieDetailsFragment : AppCompatActivity() {
         val movieLanguage = intent.getStringExtra("MOVIE_LANGUAGE").toString()
         val movieReleaseDate = intent.getStringExtra("MOVIE_RELEASE_DATE").toString()
 
+        var movieIdInt = movieID.toInt()
+        val movie = getMovieFromId(movieIdInt)
+
         setMovieRating(movieRating)
         setBackDropImage(movieBackDropPath)
         setPosterImage(moviePosterPath)
@@ -64,13 +67,8 @@ class MovieDetailsFragment : AppCompatActivity() {
         setMovieID(movieID)
         setToolBar(movieName)
 
-        var _movieID = movieID.toInt()
-
         var button = findViewById<Button>(R.id.add_to_favourites)
-        val movie = getMovieFromId(_movieID)
-
         button.setOnClickListener {
-
             Snackbar.make(it, movie.value?.title.toString(), Snackbar.LENGTH_LONG).show()
         }
 

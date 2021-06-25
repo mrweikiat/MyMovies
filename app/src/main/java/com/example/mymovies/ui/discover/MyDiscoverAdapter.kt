@@ -8,22 +8,23 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import androidx.lifecycle.MutableLiveData
 import com.bumptech.glide.Glide
 import com.example.mymovies.Movie
 import com.example.mymovies.R
 
 internal class MainAdapter(
     private val context: DiscoverFragment,
-    private val numberInWords: ArrayList<String>,
-    private val numberImage: ArrayList<String>
+    private val movies: ArrayList<Movie>
 ) :
     BaseAdapter() {
     private var layoutInflater: LayoutInflater? = null
     private lateinit var imageView: ImageView
     private lateinit var textView: TextView
+    private var image_URL = "https://image.tmdb.org/t/p/original"
 
     override fun getCount(): Int {
-        return numberInWords.size
+        return movies.size
     }
     override fun getItem(position: Int): Any? {
         return null
@@ -44,14 +45,14 @@ internal class MainAdapter(
         imageView = convertView!!.findViewById(R.id.imageView)
         textView = convertView.findViewById(R.id.textView)
 
-        var image = numberImage[position]
+        var imagePath = image_URL + movies[position].poster
 
         // load img using glide
         Glide.with(imageView)
-            .load(image)
+            .load(imagePath)
             .into(imageView)
 
-        textView.text = numberInWords[position]
+        textView.text = movies[position].title
         return convertView
     }
 }

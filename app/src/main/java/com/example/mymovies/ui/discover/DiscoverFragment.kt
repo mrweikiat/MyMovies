@@ -19,8 +19,6 @@ class DiscoverFragment : Fragment() {
     private var _binding: FragmentDiscoverBinding? = null
     private lateinit var gridView: GridView
 
-    private var image_URL = "https://image.tmdb.org/t/p/original"
-
     // This property is only valid between onCreateView and
     // onDestroyView.
     private val binding get() = _binding!!
@@ -36,24 +34,16 @@ class DiscoverFragment : Fragment() {
         _binding = FragmentDiscoverBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
-        var movieNames = ArrayList<String>()
-        var movieImages = ArrayList<String>()
-
         discoverViewModel.getMovies()!!.observe(
             viewLifecycleOwner,
             Observer { newMovieData ->
-                for (movie in newMovieData) {
-                    movieNames.add(movie.title!!)
-                    val path = image_URL + movie.poster!!
-                    movieImages.add(path)
-                }
+
                 gridView = root.findViewById(R.id.gridView)
-                val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
+                val mainAdapter = MainAdapter(this@DiscoverFragment, newMovieData)
                 gridView.adapter = mainAdapter
 
                 gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
 
-                    //view.findNavController().navigate(R.id.action_navigation_discover_to_navigation_details)
                     val intent = Intent (activity, MovieDetailsFragment::class.java)
                     // TODO try to pass as a json
 
@@ -160,61 +150,40 @@ class DiscoverFragment : Fragment() {
 
         discoverViewModel.clearList()
 
-        var movieNames = ArrayList<String>()
-        var movieImages = ArrayList<String>()
-
         discoverViewModel.getTopRatedMovies()!!.observe(
             viewLifecycleOwner,
             Observer { newMovieData ->
-                for (movie in newMovieData) {
-                    movieNames.add(movie.title!!)
-                    val path = image_URL + movie.poster!!
-                    movieImages.add(path)
-                }
-                val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
+                val mainAdapter = MainAdapter(this@DiscoverFragment, newMovieData)
                 gridView.adapter = mainAdapter
-            })
+            }
+        )
+
     }
 
     // fun to re-populate gridview to popular movies
     private fun makePopularMoviesList() {
         discoverViewModel.clearList()
 
-        var movieNames = ArrayList<String>()
-        var movieImages = ArrayList<String>()
-
         discoverViewModel.getMovies()!!.observe(
             viewLifecycleOwner,
             Observer { newMovieData ->
-
-                for (movie in newMovieData) {
-                    movieNames.add(movie.title!!)
-                    val path = image_URL + movie.poster!!
-                    movieImages.add(path)
-                }
-                val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
+                val mainAdapter = MainAdapter(this@DiscoverFragment, newMovieData)
                 gridView.adapter = mainAdapter
-            })
+            }
+        )
     }
 
     // fun to re-populate gridview to popular movies
     private fun makeNowPlayingMoviesList() {
 
         discoverViewModel.clearList()
-
-        var movieNames = ArrayList<String>()
-        var movieImages = ArrayList<String>()
-
+        
         discoverViewModel.getNowPlayingMovies()!!.observe(
             viewLifecycleOwner,
             Observer { newMovieData ->
-                for (movie in newMovieData) {
-                    movieNames.add(movie.title!!)
-                    val path = image_URL + movie.poster!!
-                    movieImages.add(path)
-                }
-                val mainAdapter = MainAdapter(this@DiscoverFragment, movieNames, movieImages)
+                val mainAdapter = MainAdapter(this@DiscoverFragment, newMovieData)
                 gridView.adapter = mainAdapter
-            })
+            }
+        )
     }
 }

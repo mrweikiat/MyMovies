@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import android.widget.AdapterView
 import android.widget.GridView
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.mymovies.MyFavouriteAdapter
@@ -41,31 +42,31 @@ class FavouritesFragment : Fragment() {
         var movieNames = ArrayList<String>()
         var movieImages = ArrayList<String>()
 
+        favouritesViewModel.getMovies()!!.observe(
+            viewLifecycleOwner, Observer {
+                movieList ->
+                for (movie in movieList) {
+                    movieNames.add(movie.title!!)
+                    val path = image_URL + movie.poster!!
+                    movieImages.add(path)
+                }
 
-        /**
-         * val movieList = favouritesViewModel.getFavouriteMovies()
+                gridView = root.findViewById(R.id.gridViewFavourite)
 
-        for (movie in movieList) {
-        movieNames.add(movie.title.toString())
-        val str = image_URL + movie.poster.toString()
-        movieImages.add(str)
-        }
-         */
+                // adapter for movie list
+                val mainAdapter = MyFavouriteAdapter(this@FavouritesFragment, movieNames, movieImages)
+
+                gridView.adapter = mainAdapter
+
+                gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
+                    val intent = Intent (activity, MovieDetailsFragment::class.java)
+                    activity?.startActivity(intent)
+                }
+
+            }
+        )
 
 
-        gridView = root.findViewById(R.id.gridViewFavourite)
-
-        // adapter for movie list
-        val mainAdapter = MyFavouriteAdapter(this@FavouritesFragment, movieNames, movieImages)
-
-        gridView.adapter = mainAdapter
-
-        gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
-            // Write code to perform action when item is clicked.
-            //view.findNavController().navigate(R.id.action_navigation_favourites_to_navigation_details)
-            val intent = Intent (activity, MovieDetailsFragment::class.java)
-            activity?.startActivity(intent)
-        }
 
         return root
     }
