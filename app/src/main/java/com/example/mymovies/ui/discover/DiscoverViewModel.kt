@@ -12,8 +12,7 @@ class DiscoverViewModel : ViewModel() {
 
     var moviesData : MutableLiveData<ArrayList<Movie>>? = null
     var favouriteMoviesData = MutableLiveData<ArrayList<Movie>>()
-    var movie : MutableLiveData<Movie>? = null
-    var index : Int = 0
+    var movie = MutableLiveData<Movie>()
 
    fun getMovies(): LiveData<ArrayList<Movie>>? {
        moviesData = getPopularPage()
@@ -42,15 +41,8 @@ class DiscoverViewModel : ViewModel() {
         return favouriteMoviesData
     }
 
-    // for testing
-    fun getSelectedMovie(): MutableLiveData<Movie>? {
-        return movie
-    }
-
     fun setSelectedMovie(index: Int, list: ArrayList<Movie>) {
         var _movie = list[index]
-        movie?.value = _movie
+        movie.value = _movie
     }
-
-
 }

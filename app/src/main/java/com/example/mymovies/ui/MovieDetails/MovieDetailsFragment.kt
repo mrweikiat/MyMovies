@@ -39,17 +39,19 @@ class MovieDetailsFragment : Fragment() {
     ): View? {
 
         return inflater.inflate(R.layout.movies_details, container, false)
+
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val model = ViewModelProvider(requireActivity()).get(DiscoverViewModel::class.java)
 
-        model.getSelectedMovie()!!.observe(
+        val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
+
+        model.movie.observe(
             viewLifecycleOwner, Observer {
                 movie ->
 
-                val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
                 //(activity as AppCompatActivity).setSupportActionBar(toolbar)
                 //(activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
                 //(activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
@@ -65,15 +67,14 @@ class MovieDetailsFragment : Fragment() {
                 setMovieID(movie.movie_id!!)
                 setToolBar(movie.title!!)
 
-
-                var button = view.findViewById<Button>(R.id.add_to_favourites)
-                button.setOnClickListener {
-                    Snackbar.make(it, movie.title.toString(), Snackbar.LENGTH_LONG).show()
-
-                }
-
             }
         )
+
+        var button = view.findViewById<Button>(R.id.add_to_favourites)
+        button.setOnClickListener {
+            Snackbar.make(it, "HELLO", Snackbar.LENGTH_LONG).show()
+
+        }
 
     }
 

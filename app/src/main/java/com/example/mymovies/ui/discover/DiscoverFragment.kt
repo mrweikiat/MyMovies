@@ -29,8 +29,7 @@ class DiscoverFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        discoverViewModel =
-            ViewModelProvider(this).get(DiscoverViewModel::class.java)
+        discoverViewModel = ViewModelProvider(requireActivity()).get(DiscoverViewModel::class.java)
 
         _binding = FragmentDiscoverBinding.inflate(inflater, container, false)
         val root: View = binding.root
@@ -51,7 +50,6 @@ class DiscoverFragment : Fragment() {
                     discoverViewModel.setSelectedMovie(position, newMovieData)
 
                     view.findNavController().navigate(action)
-
 
                 }
                 // for options sorting
