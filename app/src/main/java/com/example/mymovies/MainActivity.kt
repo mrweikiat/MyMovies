@@ -1,5 +1,6 @@
 package com.example.mymovies
 
+import android.content.Intent
 import android.os.Bundle
 import android.widget.GridView
 import com.google.android.material.bottomnavigation.BottomNavigationView
@@ -28,7 +29,7 @@ class MainActivity : AppCompatActivity() {
         // menu should be considered as top level destinations.
         val appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.navigation_discover, R.id.navigation_favourites
+                R.id.navigation_discover, R.id.navigation_favourites, R.id.movieDetailsFragment
             )
         )
 

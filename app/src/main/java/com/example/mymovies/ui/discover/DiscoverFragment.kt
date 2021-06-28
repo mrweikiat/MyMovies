@@ -8,6 +8,7 @@ import android.widget.GridView
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentDiscoverBinding
 import com.example.mymovies.ui.MovieDetails.MovieDetailsFragment
@@ -44,66 +45,14 @@ class DiscoverFragment : Fragment() {
 
                 gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
 
-                    val intent = Intent (activity, MovieDetailsFragment::class.java)
                     // TODO try to pass as a json
+                    val action = DiscoverFragmentDirections.actionNavigationDiscoverToMovieDetailsFragment()
 
-                    intent.putExtra("MOVIE_NAME", discoverViewModel
-                        .moviesData
-                        ?.value
-                        ?.get(position)
-                        ?.title
-                        .toString())
+                    discoverViewModel.setSelectedMovie(position, newMovieData)
 
-                    intent.putExtra("MOVIE_BACKDROP", discoverViewModel
-                        .moviesData
-                        ?.value
-                        ?.get(position)
-                        ?.backdrop
-                        .toString())
+                    view.findNavController().navigate(action)
 
-                    intent.putExtra("MOVIE_POSTER", discoverViewModel
-                        .moviesData
-                        ?.value
-                        ?.get(position)
-                        ?.poster
-                        .toString())
 
-                    intent.putExtra("MOVIE_DESCRIPTION", discoverViewModel
-                        .moviesData
-                        ?.value
-                        ?.get(position)
-                        ?.overview
-                        .toString())
-
-                    intent.putExtra("MOVIE_RATING", discoverViewModel
-                        .moviesData
-                        ?.value
-                        ?.get(position)
-                        ?.rating
-                        .toString())
-
-                    intent.putExtra("MOVIE_LANGUAGE", discoverViewModel
-                        .moviesData
-                        ?.value
-                        ?.get(position)
-                        ?.language
-                        .toString())
-
-                    intent.putExtra("MOVIE_RELEASE_DATE", discoverViewModel
-                        .moviesData
-                        ?.value
-                        ?.get(position)
-                        ?.releaseDate
-                        .toString())
-
-                    intent.putExtra("MOVIE_ID", discoverViewModel
-                        .moviesData
-                        ?.value
-                        ?.get(position)
-                        ?.movie_id
-                        .toString())
-
-                    activity?.startActivity(intent)
                 }
                 // for options sorting
                 setHasOptionsMenu(true)
@@ -144,6 +93,7 @@ class DiscoverFragment : Fragment() {
             else -> super.onOptionsItemSelected(item)
         }
     }
+
 
     // fun to re-populate gridview to top rated movies
     private fun makeTopRatedMoviesList() {

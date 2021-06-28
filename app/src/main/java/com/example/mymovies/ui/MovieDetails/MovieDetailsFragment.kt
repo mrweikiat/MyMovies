@@ -1,6 +1,9 @@
 package com.example.mymovies.ui.MovieDetails
 
 import android.os.Bundle
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
@@ -8,15 +11,17 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentNotificationsBinding
 import androidx.appcompat.widget.Toolbar
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.example.mymovies.ui.MovieDetails.GetMovieFromId.getMovieFromId
+import com.example.mymovies.ui.discover.DiscoverViewModel
 
 
-class MovieDetailsFragment : AppCompatActivity() {
-
-    private lateinit var movieDetailsViewModel: MovieDetailsViewModel
+class MovieDetailsFragment : Fragment() {
 
     private var _binding: FragmentNotificationsBinding? = null
 
@@ -27,52 +32,58 @@ class MovieDetailsFragment : AppCompatActivity() {
     // onDestroyView.
     private val binding get() = _binding!!
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
 
-        setContentView(R.layout.movies_details)
-        val toolbar = findViewById<Toolbar>(R.id.toolbar)
-        setSupportActionBar(toolbar)
-        supportActionBar?.setDisplayHomeAsUpEnabled(true)
-        supportActionBar?.setDisplayShowHomeEnabled(true)
+        return inflater.inflate(R.layout.movies_details, container, false)
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val model = ViewModelProvider(requireActivity()).get(DiscoverViewModel::class.java)
+
+        model.getSelectedMovie()!!.observe(
+            viewLifecycleOwner, Observer {
+                movie ->
+
+                val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
+                //(activity as AppCompatActivity).setSupportActionBar(toolbar)
+                //(activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+                //(activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
+
+                //var movieIdInt = movie.movie_id!!.toInt()
+
+                setMovieRating(movie.rating!!)
+                setBackDropImage(movie.backdrop!!)
+                setPosterImage(movie.poster!!)
+                setMovieDescription(movie.overview!!)
+                setMovieLanguage(movie.language!!)
+                setMovieReleaseDate(movie.releaseDate!!)
+                setMovieID(movie.movie_id!!)
+                setToolBar(movie.title!!)
 
 
-        val movieID = intent.getStringExtra("MOVIE_ID").toString()
-        val movieName = intent.getStringExtra("MOVIE_NAME").toString()
-        val movieDescription: String = intent.getStringExtra("MOVIE_DESCRIPTION").toString()
-        val movieBackDropPath = intent.getStringExtra("MOVIE_BACKDROP").toString()
-        val moviePosterPath = intent.getStringExtra("MOVIE_POSTER").toString()
-        val movieRating = intent.getStringExtra("MOVIE_RATING").toString()
-        val movieLanguage = intent.getStringExtra("MOVIE_LANGUAGE").toString()
-        val movieReleaseDate = intent.getStringExtra("MOVIE_RELEASE_DATE").toString()
+                var button = view.findViewById<Button>(R.id.add_to_favourites)
+                button.setOnClickListener {
+                    Snackbar.make(it, movie.title.toString(), Snackbar.LENGTH_LONG).show()
 
-        var movieIdInt = movieID.toInt()
-        val movie = getMovieFromId(movieIdInt)
+                }
 
-        setMovieRating(movieRating)
-        setBackDropImage(movieBackDropPath)
-        setPosterImage(moviePosterPath)
-        setMovieDescription(movieDescription)
-        setMovieLanguage(movieLanguage)
-        setMovieReleaseDate(movieReleaseDate)
-        setMovieID(movieID)
-        setToolBar(movieName)
-
-        var button = findViewById<Button>(R.id.add_to_favourites)
-        button.setOnClickListener {
-            Snackbar.make(it, movie.value?.title.toString(), Snackbar.LENGTH_LONG).show()
-        }
-
+            }
+        )
 
     }
 
     private fun setMovieRating(movieRating: String) {
-        val movie_rating = findViewById<TextView>(R.id.movie_details_rating)
+        val movie_rating = requireView().findViewById<TextView>(R.id.movie_details_rating)
         movie_rating.text = "Rating: $movieRating"
     }
 
     private fun setBackDropImage(movieBackDropPath: String) {
-        var movieDetailsImage = findViewById<ImageView>(R.id.movies_details_image)
+        var movieDetailsImage = requireView().findViewById<ImageView>(R.id.movies_details_image)
 
         // load img using glide
         Glide.with(this)
@@ -81,7 +92,7 @@ class MovieDetailsFragment : AppCompatActivity() {
     }
 
     private fun setPosterImage(moviePosterPath: String) {
-        var movieDetailsPoster = findViewById<ImageView>(R.id.movies_details_poster)
+        var movieDetailsPoster = requireView().findViewById<ImageView>(R.id.movies_details_poster)
 
         Glide.with(this)
             .load(image_URL + moviePosterPath)
@@ -89,27 +100,27 @@ class MovieDetailsFragment : AppCompatActivity() {
     }
 
     private fun setMovieDescription(movieDescription: String) {
-        val movie_description = findViewById<TextView>(R.id.movie_details_description)
+        val movie_description = requireView().findViewById<TextView>(R.id.movie_details_description)
         movie_description.text = movieDescription
     }
 
     private fun setToolBar(movieName: String) {
-        val toolbar_layout = findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)
+        val toolbar_layout = requireView().findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)
         toolbar_layout.title = movieName
     }
 
     private fun setMovieLanguage(movieLanguage: String) {
-        val movie_language = findViewById<TextView>(R.id.movie_details_language)
+        val movie_language = requireView().findViewById<TextView>(R.id.movie_details_language)
         movie_language.text = "Language: $movieLanguage"
     }
 
     private fun setMovieReleaseDate(movieReleaseDate: String) {
-        val movie_release_date = findViewById<TextView>(R.id.movie_details_release_date)
+        val movie_release_date = requireView().findViewById<TextView>(R.id.movie_details_release_date)
         movie_release_date.text = "Release date: $movieReleaseDate"
     }
 
     private fun setMovieID(movie_id: String?) {
-        val movie_ID = findViewById<TextView>(R.id.movie_details_movie_id)
+        val movie_ID = requireView().findViewById<TextView>(R.id.movie_details_movie_id)
         movie_ID.text = "Movie ID: ${movie_id.toString()}"
     }
 }
