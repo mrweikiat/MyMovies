@@ -7,19 +7,20 @@ import android.view.ViewGroup
 import android.widget.BaseAdapter
 import android.widget.ImageView
 import android.widget.TextView
+import com.bumptech.glide.Glide
 import com.example.mymovies.ui.favourites.FavouritesFragment
 
 internal class MyFavouriteAdapter(
     private val context: FavouritesFragment,
-    private val numbersInWords: ArrayList<String>,
-    private val numberImage: ArrayList<String>
+    private val moviesData: ArrayList<Movie>
 ) :
     BaseAdapter() {
     private var layoutInflater: LayoutInflater? = null
     private lateinit var imageView: ImageView
     private lateinit var textView: TextView
+    private var image_URL = "https://image.tmdb.org/t/p/original"
     override fun getCount(): Int {
-        return numbersInWords.size
+        return moviesData.size
     }
     override fun getItem(position: Int): Any? {
         return null
@@ -40,9 +41,17 @@ internal class MyFavouriteAdapter(
         if (convertView == null) {
             convertView = layoutInflater!!.inflate(R.layout.favourite_movie_item, null)
         }
+
         imageView = convertView!!.findViewById(R.id.imageView)
         textView = convertView.findViewById(R.id.textView)
-        textView.text = numbersInWords[position]
+        var imagePath = image_URL + moviesData[position].poster
+
+        // load img using glide
+        Glide.with(imageView)
+            .load(imagePath)
+            .into(imageView)
+
+        textView.text = moviesData[position].title
 
 
         return convertView

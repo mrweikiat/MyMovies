@@ -11,6 +11,7 @@ import com.example.mymovies.ui.discover.TopRatedPage.getTopRatedPage
 class DiscoverViewModel : ViewModel() {
 
     var moviesData : MutableLiveData<ArrayList<Movie>>? = null
+    var favouriteMoviesData = MutableLiveData<ArrayList<Movie>>()
 
    fun getMovies(): LiveData<ArrayList<Movie>>? {
        moviesData = getPopularPage()
@@ -29,6 +30,14 @@ class DiscoverViewModel : ViewModel() {
 
     fun clearList(){
         moviesData = null
+    }
+
+    fun getCurrList(): LiveData<ArrayList<Movie>>? {
+        return moviesData
+    }
+
+    fun getFavouriteList(): LiveData<ArrayList<Movie>> {
+        return favouriteMoviesData
     }
 
 }

@@ -8,11 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentNotificationsBinding
 import androidx.appcompat.widget.Toolbar
-import androidx.lifecycle.LifecycleOwner
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.example.mymovies.ui.favourites.FavouritesViewModel
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
 import com.example.mymovies.ui.MovieDetails.GetMovieFromId.getMovieFromId
@@ -21,8 +17,6 @@ import com.example.mymovies.ui.MovieDetails.GetMovieFromId.getMovieFromId
 class MovieDetailsFragment : AppCompatActivity() {
 
     private lateinit var movieDetailsViewModel: MovieDetailsViewModel
-
-    private lateinit var favouritesViewModel: FavouritesViewModel
 
     private var _binding: FragmentNotificationsBinding? = null
 
@@ -35,9 +29,6 @@ class MovieDetailsFragment : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-        favouritesViewModel =
-            ViewModelProvider(this).get(FavouritesViewModel::class.java)
 
         setContentView(R.layout.movies_details)
         val toolbar = findViewById<Toolbar>(R.id.toolbar)

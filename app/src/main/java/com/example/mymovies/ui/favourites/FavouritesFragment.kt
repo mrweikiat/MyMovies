@@ -15,10 +15,10 @@ import com.example.mymovies.MyFavouriteAdapter
 import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentFavouritesBinding
 import com.example.mymovies.ui.MovieDetails.MovieDetailsFragment
+import com.example.mymovies.ui.discover.DiscoverViewModel
 
 class FavouritesFragment : Fragment() {
 
-    private lateinit var favouritesViewModel: FavouritesViewModel
     private var _binding: FragmentFavouritesBinding? = null
 
     private lateinit var gridView: GridView
@@ -33,28 +33,30 @@ class FavouritesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        favouritesViewModel =
-            ViewModelProvider(this).get(FavouritesViewModel::class.java)
 
-        _binding = FragmentFavouritesBinding.inflate(inflater, container, false)
-        val root: View = binding.root
+        return inflater.inflate(R.layout.fragment_favourites, container, false)
+    }
 
-        var movieNames = ArrayList<String>()
-        var movieImages = ArrayList<String>()
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        val model = ViewModelProvider(requireActivity()).get(DiscoverViewModel::class.java)
 
-        gridView = root.findViewById(R.id.gridViewFavourite)
+        model.getFavouriteList().observe(
+            viewLifecycleOwner, Observer {
+                    thisMoviesData ->
 
-        // adapter for movie list
-        val mainAdapter = MyFavouriteAdapter(this@FavouritesFragment, movieNames, movieImages)
+                // adapter for movie list
+                val mainAdapter = MyFavouriteAdapter(this@FavouritesFragment, thisMoviesData)
+                gridView = view.findViewById(R.id.gridViewFavourite)
+                gridView.adapter = mainAdapter
 
-        gridView.adapter = mainAdapter
+                gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
+                    val intent = Intent (activity, MovieDetailsFragment::class.java)
+                    activity?.startActivity(intent)
+                }
 
-        gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
-            val intent = Intent (activity, MovieDetailsFragment::class.java)
-            activity?.startActivity(intent)
-        }
-
-        return root
+            }
+        )
     }
 
     override fun onDestroyView() {
