@@ -14,10 +14,16 @@ class DiscoverViewModel : ViewModel() {
     var favouriteMoviesData = MutableLiveData<ArrayList<Movie>>()
     var movie = MutableLiveData<Movie>()
 
+
+
    fun getMovies(): LiveData<ArrayList<Movie>>? {
        moviesData = getPopularPage()
        return moviesData
    }
+
+    fun getDefault(): LiveData<ArrayList<Movie>>? {
+        return moviesData
+    }
 
     fun getTopRatedMovies(): LiveData<ArrayList<Movie>>? {
         moviesData = getTopRatedPage()

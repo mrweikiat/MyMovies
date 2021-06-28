@@ -1,5 +1,7 @@
 package com.example.mymovies.ui.MovieDetails
 
+import android.graphics.Color
+import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -8,17 +10,16 @@ import android.widget.Button
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
-import com.example.mymovies.R
-import com.example.mymovies.databinding.FragmentNotificationsBinding
 import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.example.mymovies.R
+import com.example.mymovies.databinding.FragmentNotificationsBinding
+import com.example.mymovies.ui.discover.DiscoverViewModel
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
-import com.example.mymovies.ui.MovieDetails.GetMovieFromId.getMovieFromId
-import com.example.mymovies.ui.discover.DiscoverViewModel
 
 
 class MovieDetailsFragment : Fragment() {
@@ -38,6 +39,13 @@ class MovieDetailsFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
 
+        (activity as AppCompatActivity).supportActionBar?.title = ""
+        (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
+        (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
+        (activity as AppCompatActivity).supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+
+
+
         return inflater.inflate(R.layout.movies_details, container, false)
 
     }
@@ -52,12 +60,6 @@ class MovieDetailsFragment : Fragment() {
             viewLifecycleOwner, Observer {
                 movie ->
 
-                //(activity as AppCompatActivity).setSupportActionBar(toolbar)
-                //(activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
-                //(activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
-
-                //var movieIdInt = movie.movie_id!!.toInt()
-
                 setMovieRating(movie.rating!!)
                 setBackDropImage(movie.backdrop!!)
                 setPosterImage(movie.poster!!)
@@ -67,14 +69,13 @@ class MovieDetailsFragment : Fragment() {
                 setMovieID(movie.movie_id!!)
                 setToolBar(movie.title!!)
 
+                var button = requireView().findViewById<Button>(R.id.add_to_favourites)
+                button.setOnClickListener {
+                    Snackbar.make(it, "HELLO", Snackbar.LENGTH_LONG).show()
+                }
+
             }
         )
-
-        var button = view.findViewById<Button>(R.id.add_to_favourites)
-        button.setOnClickListener {
-            Snackbar.make(it, "HELLO", Snackbar.LENGTH_LONG).show()
-
-        }
 
     }
 
