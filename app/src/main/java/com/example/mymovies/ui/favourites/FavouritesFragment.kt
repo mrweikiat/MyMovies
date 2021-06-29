@@ -18,12 +18,12 @@ import com.example.mymovies.MyFavouriteAdapter
 import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentFavouritesBinding
 import com.example.mymovies.ui.MovieDetails.MovieDetailsFragment
+import com.example.mymovies.ui.discover.DiscoverFragmentDirections
 import com.example.mymovies.ui.discover.DiscoverViewModel
 
 class FavouritesFragment : Fragment() {
 
     private var _binding: FragmentFavouritesBinding? = null
-    private lateinit var discoverViewModel: DiscoverViewModel
 
     private lateinit var gridView: GridView
     private var image_URL = "https://image.tmdb.org/t/p/original"
@@ -36,13 +36,15 @@ class FavouritesFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (activity as AppCompatActivity).supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.BLACK))
+        (activity as AppCompatActivity)
+            .supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.BLACK))
         return inflater.inflate(R.layout.fragment_favourites, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val model = ViewModelProvider(requireActivity()).get(DiscoverViewModel::class.java)
+        val model = ViewModelProvider(requireActivity())
+            .get(DiscoverViewModel::class.java)
 
         model.favouriteMoviesData?.observe(
             viewLifecycleOwner, Observer {
@@ -52,10 +54,18 @@ class FavouritesFragment : Fragment() {
                 val mainAdapter = MyFavouriteAdapter(this@FavouritesFragment, MoviesData)
                 gridView = view.findViewById(R.id.gridViewFavourite)
                 gridView.adapter = mainAdapter
-                gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
 
+                gridView.onItemClickListener = AdapterView.OnItemClickListener {
+                        parent,
+                        view: View,
+                        position: Int,
+                        id: Long ->
+                    val action = FavouritesFragmentDirections
+                        .actionNavigationFavouritesToMovieDetailsFragment()
+
+                    model.setSelectedMovie(position, MoviesData)
+                    view.findNavController().navigate(action)
                 }
-
             }
         )
     }

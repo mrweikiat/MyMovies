@@ -56,7 +56,6 @@ class DiscoverFragment : Fragment() {
                 gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
                     val action = DiscoverFragmentDirections.actionNavigationDiscoverToMovieDetailsFragment()
                     discoverViewModel.setSelectedMovie(position, newMovieData)
-                    //discoverViewModel.addToFavourites(newMovieData[position])
                     view.findNavController().navigate(action)
                 }
             }

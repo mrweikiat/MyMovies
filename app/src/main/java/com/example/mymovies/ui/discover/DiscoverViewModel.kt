@@ -14,14 +14,10 @@ class DiscoverViewModel : ViewModel() {
     var favouriteMoviesData : MutableLiveData<ArrayList<Movie>> = MutableLiveData(arrayListOf())
     var movie = MutableLiveData<Movie>()
 
-   fun getMovies(): LiveData<ArrayList<Movie>>? {
+    fun getMovies(): LiveData<ArrayList<Movie>>? {
        moviesData = getPopularPage()
        return moviesData
    }
-
-    fun getDefault(): LiveData<ArrayList<Movie>>? {
-        return moviesData
-    }
 
     fun getTopRatedMovies(): LiveData<ArrayList<Movie>>? {
         moviesData = getTopRatedPage()
@@ -37,10 +33,6 @@ class DiscoverViewModel : ViewModel() {
         moviesData = null
     }
 
-    fun getCurrList(): LiveData<ArrayList<Movie>>? {
-        return moviesData
-    }
-
     fun setSelectedMovie(index: Int, list: ArrayList<Movie>) {
         var _movie = list[index]
         movie.value = _movie
@@ -50,5 +42,14 @@ class DiscoverViewModel : ViewModel() {
         var movieList = favouriteMoviesData.value
         movieList!!.add(movie)
         favouriteMoviesData.value = movieList
+    }
+
+    fun checkDuplicate(movieID: String): Boolean {
+        for (movie in favouriteMoviesData.value!!) {
+            if (movie.movie_id == movieID) {
+                return true
+            }
+        }
+        return false
     }
 }

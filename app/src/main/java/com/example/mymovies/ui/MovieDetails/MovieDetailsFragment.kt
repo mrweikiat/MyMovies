@@ -56,31 +56,35 @@ class MovieDetailsFragment : Fragment() {
 
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
         var button = requireView().findViewById<Button>(R.id.add_to_favourites)
-        //var _movie = Movie()
+        var _movie = Movie()
 
         model.movie.observe(
             viewLifecycleOwner, Observer {
                 movie ->
 
-                //_movie = movie
-                setMovieRating(movie.rating!!)
-                setBackDropImage(movie.backdrop!!)
-                setPosterImage(movie.poster!!)
-                setMovieDescription(movie.overview!!)
-                setMovieLanguage(movie.language!!)
-                setMovieReleaseDate(movie.releaseDate!!)
-                setMovieID(movie.movie_id!!)
-                setToolBar(movie.title!!)
+                _movie = movie
+                setMovieRating(movie?.rating!!)
+                setBackDropImage(movie?.backdrop!!)
+                setPosterImage(movie?.poster!!)
+                setMovieDescription(movie?.overview!!)
+                setMovieLanguage(movie?.language!!)
+                setMovieReleaseDate(movie?.releaseDate!!)
+                setMovieID(movie?.movie_id!!)
+                setToolBar(movie?.title!!)
 
-                button.setOnClickListener {
-                    model.addToFavourites(movie)
-                    //val action = MovieDetailsFragmentDirections.actionMovieDetailsFragmentToNavigationFavourites()
-                    //view.findNavController().navigate(action)
-                }
             }
         )
 
+        button.setOnClickListener {
 
+            var movieID = _movie.movie_id
+            if (model.checkDuplicate(movieID!!)) {
+                Snackbar.make(view,"Already In Favourite List!", Snackbar.LENGTH_LONG).show()
+            } else {
+                model.addToFavourites(_movie)
+                Snackbar.make(view,"Added to favourite list", Snackbar.LENGTH_LONG).show()
+            }
+        }
     }
 
     private fun setMovieRating(movieRating: String) {
