@@ -18,7 +18,6 @@ import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.example.mymovies.Movie
 import com.example.mymovies.R
-import com.example.mymovies.databinding.FragmentNotificationsBinding
 import com.example.mymovies.ui.discover.DiscoverViewModel
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
@@ -26,15 +25,12 @@ import com.google.android.material.snackbar.Snackbar
 
 class MovieDetailsFragment : Fragment() {
 
-    private var _binding: FragmentNotificationsBinding? = null
 
     private var image_URL = "https://image.tmdb.org/t/p/original"
 
 
     // This property is only valid between onCreateView and
     // onDestroyView.
-    private val binding get() = _binding!!
-
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,

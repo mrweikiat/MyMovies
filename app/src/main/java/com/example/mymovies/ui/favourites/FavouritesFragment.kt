@@ -37,7 +37,8 @@ class FavouritesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         (activity as AppCompatActivity)
-            .supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.BLACK))
+            .supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#212121")))
+
         return inflater.inflate(R.layout.fragment_favourites, container, false)
     }
 

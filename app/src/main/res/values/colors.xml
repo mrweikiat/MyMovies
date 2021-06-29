@@ -12,4 +12,15 @@
     <color name="colorPrimary">#11209F</color>
     <color name="colorPrimaryDark">#00006e</color>
     <color name="colorAccent">#F5A623</color>
+
+    // colors for gridview items
+    <color name="colorLightGrey">#424242</color>
+    <color name="colorBackGroundGrey">#313130</color>
+    <color name="colorTaskBarGrey">#212121</color>
+
+    // color for bottom nav bar
+    <color name="colorLightWhite">#bbbbbf</color>
+    <color name="bottomNavColorGray">#212121</color>
+    <color name="activeWhite">#fcfcfc</color>
+
 </resources>
