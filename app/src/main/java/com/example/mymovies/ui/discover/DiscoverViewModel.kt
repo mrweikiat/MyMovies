@@ -53,7 +53,9 @@ class DiscoverViewModel : ViewModel() {
     }
 
     fun addToFavourites(movie: Movie) {
-        favouriteMoviesData.value?.add(movie)
+        var movieList = favouriteMoviesData.value
+        movieList?.add(movie)
+        favouriteMoviesData.value = movieList!!
     }
 
     fun getFavouriteMovie(): LiveData<ArrayList<Movie>> {

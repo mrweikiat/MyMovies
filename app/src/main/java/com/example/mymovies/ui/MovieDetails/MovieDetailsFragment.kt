@@ -14,7 +14,9 @@ import androidx.appcompat.widget.Toolbar
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
+import com.example.mymovies.Movie
 import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentNotificationsBinding
 import com.example.mymovies.ui.discover.DiscoverViewModel
@@ -53,11 +55,14 @@ class MovieDetailsFragment : Fragment() {
         val model = ViewModelProvider(requireActivity()).get(DiscoverViewModel::class.java)
 
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
+        var button = requireView().findViewById<Button>(R.id.add_to_favourites)
+        //var _movie = Movie()
 
         model.movie.observe(
             viewLifecycleOwner, Observer {
                 movie ->
 
+                //_movie = movie
                 setMovieRating(movie.rating!!)
                 setBackDropImage(movie.backdrop!!)
                 setPosterImage(movie.poster!!)
@@ -67,14 +72,13 @@ class MovieDetailsFragment : Fragment() {
                 setMovieID(movie.movie_id!!)
                 setToolBar(movie.title!!)
 
-                var button = requireView().findViewById<Button>(R.id.add_to_favourites)
                 button.setOnClickListener {
                     model.addToFavourites(movie)
+                    //val action = MovieDetailsFragmentDirections.actionMovieDetailsFragmentToNavigationFavourites()
+                    //view.findNavController().navigate(action)
                 }
             }
         )
-
-
 
 
     }

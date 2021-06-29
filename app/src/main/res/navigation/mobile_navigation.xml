@@ -28,6 +28,10 @@
         android:id="@+id/movieDetailsFragment"
         android:name="com.example.mymovies.ui.MovieDetails.MovieDetailsFragment"
         android:label="content_scrolling"
-        tools:layout="@layout/content_scrolling" />
+        tools:layout="@layout/content_scrolling" >
+        <action
+            android:id="@+id/action_movieDetailsFragment_to_navigation_favourites"
+            app:destination="@id/navigation_favourites" />
+    </fragment>
 
 </navigation>
