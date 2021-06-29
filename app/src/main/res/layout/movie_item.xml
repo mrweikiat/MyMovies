@@ -4,13 +4,14 @@
     android:layout_height="wrap_content"
     android:orientation="vertical"
     android:gravity="center"
-    android:padding="1dp"
+    android:padding="3dp"
     android:background="@color/colorBackGroundGrey">
 
     <ImageView
         android:id="@+id/imageView"
         android:layout_width="match_parent"
-        android:layout_height="205sp" />
+        android:layout_height="205sp"
+        android:scaleType="fitXY"/>
     <TextView
         android:textAlignment="center"
         android:gravity="center"
@@ -20,5 +21,5 @@
         android:text="Numbers"
         android:textColor="@color/white"
         android:fontFamily="sans-serif"
-        android:background="@color/colorLightGrey"/>
+        android:background="@color/colorLightGrey" />
 </LinearLayout>
