@@ -85,7 +85,7 @@ class MovieDetailsFragment : Fragment() {
 
     private fun setMovieRating(movieRating: String) {
         val movie_rating = requireView().findViewById<TextView>(R.id.movie_details_rating)
-        movie_rating.text = "Rating: $movieRating"
+        movie_rating.text = "$movieRating"
     }
 
     private fun setBackDropImage(movieBackDropPath: String) {
@@ -117,12 +117,12 @@ class MovieDetailsFragment : Fragment() {
 
     private fun setMovieLanguage(movieLanguage: String) {
         val movie_language = requireView().findViewById<TextView>(R.id.movie_details_language)
-        movie_language.text = "Language: $movieLanguage"
+        movie_language.text = "$movieLanguage"
     }
 
     private fun setMovieReleaseDate(movieReleaseDate: String) {
         val movie_release_date = requireView().findViewById<TextView>(R.id.movie_details_release_date)
-        movie_release_date.text = "Release date: $movieReleaseDate"
+        movie_release_date.text = "$movieReleaseDate"
     }
 
     private fun setMovieID(movie_id: String?) {
