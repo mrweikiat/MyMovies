@@ -44,7 +44,7 @@ class FavouritesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val model = ViewModelProvider(requireActivity()).get(DiscoverViewModel::class.java)
 
-        model.favouriteMoviesData.observe(
+        model.favouriteMoviesData?.observe(
             viewLifecycleOwner, Observer {
                     MoviesData ->
 
