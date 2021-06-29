@@ -20,6 +20,7 @@ import com.example.mymovies.ui.discover.DiscoverViewModel
 class FavouritesFragment : Fragment() {
 
     private var _binding: FragmentFavouritesBinding? = null
+    private lateinit var discoverViewModel: DiscoverViewModel
 
     private lateinit var gridView: GridView
     private var image_URL = "https://image.tmdb.org/t/p/original"
@@ -40,18 +41,16 @@ class FavouritesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         val model = ViewModelProvider(requireActivity()).get(DiscoverViewModel::class.java)
 
-        model.getFavouriteList().observe(
+        model.favouriteMoviesData.observe(
             viewLifecycleOwner, Observer {
-                    thisMoviesData ->
+                    MoviesData ->
 
                 // adapter for movie list
-                val mainAdapter = MyFavouriteAdapter(this@FavouritesFragment, thisMoviesData)
+                val mainAdapter = MyFavouriteAdapter(this@FavouritesFragment, MoviesData)
                 gridView = view.findViewById(R.id.gridViewFavourite)
                 gridView.adapter = mainAdapter
-
                 gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
-                    val intent = Intent (activity, MovieDetailsFragment::class.java)
-                    activity?.startActivity(intent)
+
                 }
 
             }

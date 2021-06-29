@@ -44,8 +44,6 @@ class MovieDetailsFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
-
-
         return inflater.inflate(R.layout.movies_details, container, false)
 
     }
@@ -71,11 +69,13 @@ class MovieDetailsFragment : Fragment() {
 
                 var button = requireView().findViewById<Button>(R.id.add_to_favourites)
                 button.setOnClickListener {
-                    Snackbar.make(it, "HELLO", Snackbar.LENGTH_LONG).show()
+                    model.addToFavourites(movie)
                 }
-
             }
         )
+
+
+
 
     }
 
