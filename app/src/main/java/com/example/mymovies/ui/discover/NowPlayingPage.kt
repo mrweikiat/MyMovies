@@ -19,7 +19,7 @@ object NowPlayingPage {
     private val pages = arrayOf("1", "2", "3", "4", "5")
 
     // function to get default page to show on discover fragment
-    fun getNowPlayingPage(): MutableLiveData<ArrayList<Movie>>? {
+    fun getNowPlayingPage(): MutableLiveData<ArrayList<Movie>> {
 
         val retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())

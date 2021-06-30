@@ -17,7 +17,7 @@ object TopRatedPage {
     private val language = "en-US"
     private val pages = arrayOf("1", "2", "3", "4", "5")
 
-    fun getTopRatedPage(): MutableLiveData<ArrayList<Movie>>? {
+    fun getTopRatedPage(): MutableLiveData<ArrayList<Movie>> {
         val retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
             .baseUrl(BASE_URL)

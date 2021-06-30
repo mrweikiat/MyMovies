@@ -10,7 +10,7 @@ import com.example.mymovies.ui.discover.TopRatedPage.getTopRatedPage
 
 class DiscoverViewModel : ViewModel() {
 
-    var moviesData : MutableLiveData<ArrayList<Movie>>? = null
+    var moviesData : MutableLiveData<ArrayList<Movie>> = MutableLiveData(arrayListOf())
     var favouriteMoviesData : MutableLiveData<ArrayList<Movie>> = MutableLiveData(arrayListOf())
     var movie = MutableLiveData<Movie>()
 
@@ -30,7 +30,7 @@ class DiscoverViewModel : ViewModel() {
     }
 
     fun clearList(){
-        moviesData = null
+        moviesData = MutableLiveData(arrayListOf())
     }
 
     fun setSelectedMovie(index: Int, list: ArrayList<Movie>) {

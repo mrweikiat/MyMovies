@@ -41,7 +41,12 @@ class DiscoverFragment : Fragment() {
 
         discoverViewModel = ViewModelProvider(requireActivity()).get(DiscoverViewModel::class.java)
 
-        discoverViewModel.getMovies()?.observe(
+        // initial loadup
+        if (discoverViewModel.moviesData.value!!.isEmpty()) {
+            discoverViewModel.getMovies()
+        }
+
+        discoverViewModel.moviesData.observe(
             viewLifecycleOwner,
             Observer { newMovieData ->
 
@@ -58,6 +63,7 @@ class DiscoverFragment : Fragment() {
                     discoverViewModel.setSelectedMovie(position, newMovieData)
                     view.findNavController().navigate(action)
                 }
+
             }
         )
     }
@@ -112,6 +118,7 @@ class DiscoverFragment : Fragment() {
                 }
             }
         )
+
     }
 
     // fun to re-populate gridview to popular movies

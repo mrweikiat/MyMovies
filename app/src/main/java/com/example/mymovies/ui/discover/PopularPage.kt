@@ -19,7 +19,7 @@ object PopularPage {
     private val pages = arrayOf("1", "2", "3", "4", "5")
 
     // function to get default page to show on discover fragment
-    fun getPopularPage(): MutableLiveData<ArrayList<Movie>>? {
+    fun getPopularPage(): MutableLiveData<ArrayList<Movie>> {
 
         val retrofit = Retrofit.Builder()
             .addConverterFactory(GsonConverterFactory.create())
