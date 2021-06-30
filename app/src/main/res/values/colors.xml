@@ -25,5 +25,7 @@
 
     // color for movies details layout
     <color name="colorBlackText">#141414</color>
+    <color name="colorGreyLine">#f1f0f1</color>
+    <color name="layoutBackground">#fafafa</color>
 
 </resources>

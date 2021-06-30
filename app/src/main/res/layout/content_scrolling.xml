@@ -6,41 +6,60 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context=".ui.MovieDetails.MovieDetailsFragment"
-    tools:showIn="@layout/movies_details">
+    tools:showIn="@layout/movies_details"
+    android:background="@color/layoutBackground">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:orientation="vertical">
+        android:orientation="vertical"
+        android:background="@color/layoutBackground">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal"
-            android:paddingTop="10sp"
-            android:paddingBottom="10sp">
+            android:layout_marginTop="@dimen/text_margin"
+            android:layout_marginRight="@dimen/text_margin"
+            android:layout_marginBottom="@dimen/text_margin">
 
             <ImageView
                 android:id="@+id/movies_details_poster"
                 android:layout_width="100sp"
                 android:layout_height="150sp"
-                android:layout_margin="@dimen/text_margin"
+                android:layout_marginLeft="@dimen/text_margin"
                 android:src="@drawable/ic_launcher_background"/>
 
-            </LinearLayout>
+            <TextView
+                android:id="@+id/movies_details_original_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/text_margin"
+                android:fontFamily="@font/lato"
+                android:text="Original title"
+                android:textAllCaps="false"
+                android:textColor="@color/black"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
 
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/text_margin"
-                android:layout_marginRight="@dimen/text_margin"
-                android:orientation="horizontal">
+                android:orientation="horizontal"
+                android:paddingTop="1dp"
+                android:paddingBottom="1dp"
+                android:background="@color/colorLightWhite">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@color/layoutBackground"
+                android:paddingTop="@dimen/linear_layout_margin"
+                android:paddingBottom="@dimen/linear_layout_margin">
 
                 <TextView
                     android:id="@+id/movie_details_rating"
@@ -60,7 +79,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:text="votes"
-                    android:paddingTop="@dimen/linear_layout_margin"
+                    android:paddingTop="@dimen/linear_layout_textView_margin"
                     android:gravity="center"
                     android:textSize="11dp" />
 
@@ -71,7 +90,10 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@color/layoutBackground"
+                android:paddingTop="@dimen/linear_layout_margin"
+                android:paddingBottom="@dimen/linear_layout_margin">
 
                 <TextView
                     android:id="@+id/movie_details_language"
@@ -91,7 +113,7 @@
                     android:layout_weight="1"
                     android:text="Language"
                     android:textSize="11dp"
-                    android:paddingTop="@dimen/linear_layout_margin"
+                    android:paddingTop="@dimen/linear_layout_textView_margin"
                     android:gravity="center"/>
 
             </LinearLayout>
@@ -100,7 +122,10 @@
                 android:layout_width="0dp"
                 android:layout_weight="1"
                 android:layout_height="match_parent"
-                android:orientation="vertical">
+                android:orientation="vertical"
+                android:background="@color/layoutBackground"
+                android:paddingTop="@dimen/linear_layout_margin"
+                android:paddingBottom="@dimen/linear_layout_margin">
 
                 <TextView
                     android:id="@+id/movie_details_release_date"
@@ -119,7 +144,7 @@
                     android:layout_height="0dp"
                     android:layout_weight="1"
                     android:text="Release Date"
-                    android:paddingTop="@dimen/linear_layout_margin"
+                    android:paddingTop="@dimen/linear_layout_textView_margin"
                     android:gravity="center"
                     android:textSize="11dp" />
 
@@ -136,10 +161,10 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="@string/movie_details_overview"
-                android:layout_margin="@dimen/text_margin"
-                android:textSize="24sp"
-                android:textColor="@color/black"
-                android:textStyle="bold"/>
+                android:layout_marginLeft="@dimen/text_margin"
+                android:layout_marginTop="@dimen/text_margin"
+                android:textSize="20sp"
+                android:textColor="@color/black"/>
 
             <TextView
                 android:id="@+id/movie_details_description"
