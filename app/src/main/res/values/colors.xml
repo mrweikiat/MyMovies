@@ -23,4 +23,7 @@
     <color name="bottomNavColorGray">#212121</color>
     <color name="activeWhite">#fcfcfc</color>
 
+    // color for movies details layout
+    <color name="colorBlackText">#141414</color>
+
 </resources>

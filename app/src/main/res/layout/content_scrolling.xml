@@ -32,30 +32,37 @@
         <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:layout_margin="@dimen/text_margin"
+                android:layout_marginLeft="@dimen/text_margin"
+                android:layout_marginRight="@dimen/text_margin"
                 android:orientation="horizontal">
 
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/movie_details_rating"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:text="Rating:"
-                    android:layout_margin="@dimen/linear_layout_margin"
-                    android:gravity="center"/>
+                    android:drawableRight="@drawable/ic_baseline_rate_review_24"
+                    android:drawablePadding="10dp"
+                    android:layout_gravity="center_horizontal"
+                    android:drawableTint="@color/colorBlackText"
+                    android:textColor="@color/colorBlackText"/>
 
                 <TextView
                     android:id="@+id/movie_details_votes"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:text="votes"
-                    android:layout_margin="@dimen/linear_layout_margin"
-                    android:gravity="center"/>
+                    android:paddingTop="@dimen/linear_layout_margin"
+                    android:gravity="center"
+                    android:textSize="11dp" />
 
             </LinearLayout>
 
@@ -63,22 +70,28 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/movie_details_language"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:text="Language:"
-                    android:layout_margin="@dimen/linear_layout_margin"
-                    android:gravity="center"/>
+                    android:drawableLeft="@drawable/ic_baseline_language_24"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/colorBlackText"
+                    android:drawableTint="@color/colorBlackText"
+                    android:layout_gravity="center_horizontal"/>
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:text="Language"
-                    android:layout_margin="@dimen/linear_layout_margin"
+                    android:textSize="11dp"
+                    android:paddingTop="@dimen/linear_layout_margin"
                     android:gravity="center"/>
 
             </LinearLayout>
@@ -86,23 +99,29 @@
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:layout_height="wrap_content"
+                android:layout_height="match_parent"
                 android:orientation="vertical">
 
                 <TextView
                     android:id="@+id/movie_details_release_date"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_width="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:text="Release Date:"
-                    android:layout_margin="@dimen/linear_layout_margin"
-                    android:gravity="center"/>
+                    android:drawableLeft="@drawable/ic_baseline_access_time_24"
+                    android:drawablePadding="10dp"
+                    android:textColor="@color/colorBlackText"
+                    android:drawableTint="@color/colorBlackText"
+                    android:layout_gravity="center_horizontal"/>
 
                 <TextView
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:layout_height="0dp"
+                    android:layout_weight="1"
                     android:text="Release Date"
-                    android:layout_margin="@dimen/linear_layout_margin"
-                    android:gravity="center"/>
+                    android:paddingTop="@dimen/linear_layout_margin"
+                    android:gravity="center"
+                    android:textSize="11dp" />
 
             </LinearLayout>
 

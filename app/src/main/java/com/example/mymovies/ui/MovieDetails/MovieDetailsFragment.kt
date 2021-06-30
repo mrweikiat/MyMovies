@@ -67,6 +67,7 @@ class MovieDetailsFragment : Fragment() {
                 setMovieReleaseDate(movie?.releaseDate!!)
                 setMovieID(movie?.movie_id!!)
                 setToolBar(movie?.title!!)
+                setVoteCount(movie?.vote_count!!)
 
             }
         )
@@ -85,7 +86,12 @@ class MovieDetailsFragment : Fragment() {
 
     private fun setMovieRating(movieRating: String) {
         val movie_rating = requireView().findViewById<TextView>(R.id.movie_details_rating)
-        movie_rating.text = "$movieRating"
+
+        if (movieRating.toDouble() < 1.0) {
+            movie_rating.text = "TBC"
+        } else {
+            movie_rating.text = "$movieRating"
+        }
     }
 
     private fun setBackDropImage(movieBackDropPath: String) {
@@ -128,5 +134,10 @@ class MovieDetailsFragment : Fragment() {
     private fun setMovieID(movie_id: String?) {
         val movie_ID = requireView().findViewById<TextView>(R.id.movie_details_movie_id)
         movie_ID.text = "Movie ID: ${movie_id.toString()}"
+    }
+
+    private fun setVoteCount(movie_count: String?) {
+        val movie_vote_count = requireView().findViewById<TextView>(R.id.movie_details_votes)
+        movie_vote_count.text = "$movie_count votes"
     }
 }

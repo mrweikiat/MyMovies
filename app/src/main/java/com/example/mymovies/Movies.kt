@@ -31,5 +31,7 @@ class Movie {
     var language: String? = null
     @SerializedName("release_date")
     var releaseDate: String? = null
+    @SerializedName("vote_count")
+    var vote_count: String? = null
 
 }
