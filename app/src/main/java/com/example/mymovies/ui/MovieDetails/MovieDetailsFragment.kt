@@ -51,7 +51,8 @@ class MovieDetailsFragment : Fragment() {
         val model = ViewModelProvider(requireActivity()).get(DiscoverViewModel::class.java)
 
         val toolbar = view.findViewById<Toolbar>(R.id.toolbar)
-        var button = requireView().findViewById<Button>(R.id.add_to_favourites)
+        var buttonAdd = requireView().findViewById<Button>(R.id.add_to_favourites)
+        var buttonRemove = requireView().findViewById<Button>(R.id.remove_from_favourites)
         var _movie = Movie()
 
         model.movie.observe(
@@ -70,19 +71,29 @@ class MovieDetailsFragment : Fragment() {
                 setVoteCount(movie.vote_count!!)
                 setTitle(movie.title!!)
 
+                buttonAdd.setOnClickListener {
+
+                    var movieID = _movie.movie_id
+                    if (model.checkDuplicate(movieID!!)) {
+                        Snackbar.make(view,"Already In Favourite List!", Snackbar.LENGTH_LONG).show()
+                    } else {
+                        model.addToFavourites(_movie)
+                        Snackbar.make(view,"Added to favourite list", Snackbar.LENGTH_LONG).show()
+                    }
+                }
+
+                buttonRemove.setOnClickListener {
+                    var movieID = _movie.movie_id
+                    if (model.checkDuplicate(movieID!!)) {
+                        Snackbar.make(view,"Removed from favourite list", Snackbar.LENGTH_LONG).show()
+                        model.removeFromFavourites(_movie)
+                    } else {
+                        Snackbar.make(view,"Not in favourite list", Snackbar.LENGTH_LONG).show()
+                    }
+                }
             }
         )
 
-        button.setOnClickListener {
-
-            var movieID = _movie.movie_id
-            if (model.checkDuplicate(movieID!!)) {
-                Snackbar.make(view,"Already In Favourite List!", Snackbar.LENGTH_LONG).show()
-            } else {
-                model.addToFavourites(_movie)
-                Snackbar.make(view,"Added to favourite list", Snackbar.LENGTH_LONG).show()
-            }
-        }
     }
 
     private fun setMovieRating(movieRating: String) {

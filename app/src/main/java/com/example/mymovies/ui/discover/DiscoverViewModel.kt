@@ -52,4 +52,10 @@ class DiscoverViewModel : ViewModel() {
         }
         return false
     }
+
+    fun removeFromFavourites(_movie: Movie) {
+        var movieList = favouriteMoviesData.value
+        movieList!!.remove(_movie)
+        favouriteMoviesData.value = movieList
+    }
 }
