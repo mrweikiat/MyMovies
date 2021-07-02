@@ -1,6 +1,5 @@
 package com.example.mymovies.ui.MovieDetails
 
-import android.content.ClipData.*
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -11,12 +10,9 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
-import com.example.mymovies.Genre
 import com.example.mymovies.Movie
 import com.example.mymovies.R
-import com.example.mymovies.ui.MovieDetails.GetMovieFromId.getMovieFromId
 import com.example.mymovies.ui.discover.DiscoverViewModel
-import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
 
 
@@ -24,7 +20,6 @@ class MovieDetailsFragment : Fragment() {
 
 
     private var image_URL = "https://image.tmdb.org/t/p/original"
-    private lateinit var gridView: GridView
     private lateinit var model: DiscoverViewModel
     private lateinit var _movie: Movie
 
@@ -37,7 +32,6 @@ class MovieDetailsFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.movie_details_menu, menu)
     }
-
 
     // This property is only valid between onCreateView and
     // onDestroyView.

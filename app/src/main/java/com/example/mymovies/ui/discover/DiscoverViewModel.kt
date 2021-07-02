@@ -8,7 +8,6 @@ import com.example.mymovies.Movie
 import com.example.mymovies.ui.discover.NowPlayingPage.getNowPlayingPage
 import com.example.mymovies.ui.discover.PopularPage.getPopularPage
 import com.example.mymovies.ui.discover.TopRatedPage.getTopRatedPage
-import com.example.mymovies.ui.MovieDetails.GetMovieFromId
 import com.example.mymovies.ui.MovieDetails.GetMovieFromId.getMovieFromId
 
 class DiscoverViewModel : ViewModel() {

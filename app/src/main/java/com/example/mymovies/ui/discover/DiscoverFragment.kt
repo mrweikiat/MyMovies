@@ -1,6 +1,5 @@
 package com.example.mymovies.ui.discover
 
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -14,8 +13,6 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentDiscoverBinding
-import com.example.mymovies.ui.MovieDetails.MovieDetailsFragment
-
 
 class DiscoverFragment : Fragment() {
 

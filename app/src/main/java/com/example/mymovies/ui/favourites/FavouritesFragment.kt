@@ -1,6 +1,5 @@
 package com.example.mymovies.ui.favourites
 
-import android.content.Intent
 import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
@@ -17,8 +16,6 @@ import androidx.navigation.findNavController
 import com.example.mymovies.MyFavouriteAdapter
 import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentFavouritesBinding
-import com.example.mymovies.ui.MovieDetails.MovieDetailsFragment
-import com.example.mymovies.ui.discover.DiscoverFragmentDirections
 import com.example.mymovies.ui.discover.DiscoverViewModel
 
 class FavouritesFragment : Fragment() {
