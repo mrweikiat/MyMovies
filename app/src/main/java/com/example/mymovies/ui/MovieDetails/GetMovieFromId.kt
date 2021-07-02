@@ -44,8 +44,4 @@ object GetMovieFromId {
         return movie
 
     }
-
-
-
-
 }

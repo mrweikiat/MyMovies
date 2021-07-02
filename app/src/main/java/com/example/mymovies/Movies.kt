@@ -35,6 +35,8 @@ class Movie {
     var vote_count: String? = null
     @SerializedName("genres")
     var genres = ArrayList<Genre>()
+    @SerializedName("genre_ids")
+    var genre_ids: ArrayList<String>? = null
 
 }
 

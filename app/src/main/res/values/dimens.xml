@@ -7,4 +7,5 @@
     <dimen name="text_margin">16dp</dimen>
     <dimen name="linear_layout_margin">15dp</dimen>
     <dimen name="linear_layout_textView_margin">10dp</dimen>
+    <dimen name="tags_margin_small">6dp</dimen>
 </resources>

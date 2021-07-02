@@ -66,9 +66,7 @@ class MovieDetailsFragment : Fragment() {
 
                 _movie = movie
                 setMovieRating(movie.rating!!)
-
-                setMovieTags(model.movieTags.value!!)
-
+                setMovieTags(movie.genre_ids!!)
                 setBackDropImage(movie.backdrop!!)
                 setPosterImage(movie.poster!!)
                 setMovieDescription(movie.overview!!)
@@ -145,11 +143,6 @@ class MovieDetailsFragment : Fragment() {
         movie_description.text = movieDescription
     }
 
-    private fun setToolBar(movieName: String) {
-        val toolbar_layout = requireView().findViewById<CollapsingToolbarLayout>(R.id.toolbar_layout)
-        toolbar_layout.title = movieName
-    }
-
     private fun setMovieLanguage(movieLanguage: String) {
         val movie_language = requireView().findViewById<TextView>(R.id.movie_details_language)
         movie_language.text = "$movieLanguage"
@@ -175,11 +168,23 @@ class MovieDetailsFragment : Fragment() {
         movieTitle.text = movie_title
     }
 
-    private fun setMovieTags(genres: ArrayList<Genre>) {
+    private fun setMovieTags(genres: ArrayList<String>) {
 
-        val mainAdapter = MovieTagAdapter(this@MovieDetailsFragment, genres)
-        gridView = requireView().findViewById(R.id.movie_tag_view)
-        gridView.adapter = mainAdapter
+        val tagView = requireView().findViewById<TextView>(R.id.movies_details_tags)
+        var strHolder = ""
+
+        var isFirst = true
+        for (genre in genres) {
+            if (!isFirst) {
+                strHolder += ", $genre"
+            } else {
+                strHolder += "Tags: $genre"
+                isFirst = false
+            }
+        }
+
+        tagView.text = strHolder
+
     }
 
 }
