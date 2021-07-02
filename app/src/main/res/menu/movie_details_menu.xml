@@ -5,9 +5,14 @@
 
     <item
         android:id="@+id/favourite_icon"
-        android:icon="@drawable/ic_baseline_favorite_border_24"
+        android:icon="@drawable/ic_baseline_add_to_queue_24"
         app:showAsAction="ifRoom"
-        android:title="favourites"
-        android:checkable="false"/>
+        android:title="favourites"/>
+
+    <item
+        android:id="@+id/remove_icon"
+        android:icon="@drawable/ic_baseline_remove_from_queue_24"
+        app:showAsAction="ifRoom"
+        android:title="remove"/>
 
 </menu>

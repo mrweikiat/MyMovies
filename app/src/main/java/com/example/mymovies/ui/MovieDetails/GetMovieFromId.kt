@@ -3,9 +3,6 @@ package com.example.mymovies.ui.MovieDetails
 import androidx.lifecycle.MutableLiveData
 import com.example.mymovies.ApiInterface
 import com.example.mymovies.Movie
-import com.example.mymovies.Movies
-import com.example.mymovies.ui.discover.NowPlayingPage
-import com.example.mymovies.ui.discover.TopRatedPage
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response

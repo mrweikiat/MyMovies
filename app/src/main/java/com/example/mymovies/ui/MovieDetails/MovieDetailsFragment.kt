@@ -5,17 +5,16 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
-import android.widget.Button
-import android.widget.ImageButton
-import android.widget.ImageView
-import android.widget.TextView
+import android.widget.*
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import com.bumptech.glide.Glide
+import com.example.mymovies.Genre
 import com.example.mymovies.Movie
 import com.example.mymovies.R
+import com.example.mymovies.ui.MovieDetails.GetMovieFromId.getMovieFromId
 import com.example.mymovies.ui.discover.DiscoverViewModel
 import com.google.android.material.appbar.CollapsingToolbarLayout
 import com.google.android.material.snackbar.Snackbar
@@ -25,6 +24,9 @@ class MovieDetailsFragment : Fragment() {
 
 
     private var image_URL = "https://image.tmdb.org/t/p/original"
+    private lateinit var gridView: GridView
+    private lateinit var model: DiscoverViewModel
+    private lateinit var _movie: Movie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -35,6 +37,7 @@ class MovieDetailsFragment : Fragment() {
         super.onCreateOptionsMenu(menu, inflater)
         inflater.inflate(R.menu.movie_details_menu, menu)
     }
+
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -55,12 +58,7 @@ class MovieDetailsFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val model = ViewModelProvider(requireActivity()).get(DiscoverViewModel::class.java)
-
-
-        var buttonAdd = requireView().findViewById<Button>(R.id.add_to_favourites)
-        var buttonRemove = requireView().findViewById<Button>(R.id.remove_from_favourites)
-        var _movie = Movie()
+        model = ViewModelProvider(requireActivity()).get(DiscoverViewModel::class.java)
 
         model.movie.observe(
             viewLifecycleOwner, Observer {
@@ -68,40 +66,21 @@ class MovieDetailsFragment : Fragment() {
 
                 _movie = movie
                 setMovieRating(movie.rating!!)
+
+                setMovieTags(model.movieTags.value!!)
+
                 setBackDropImage(movie.backdrop!!)
                 setPosterImage(movie.poster!!)
                 setMovieDescription(movie.overview!!)
                 setMovieLanguage(movie.language!!)
                 setMovieReleaseDate(movie.releaseDate!!)
                 setMovieID(movie.movie_id!!)
-                //setToolBar(movie.title!!)
                 setVoteCount(movie.vote_count!!)
                 setTitle(movie.title!!)
 
-                buttonAdd.setOnClickListener {
-
-                    var movieID = _movie.movie_id
-                    if (model.checkDuplicate(movieID!!)) {
-                        Snackbar.make(view,"Already In Favourite List!", Snackbar.LENGTH_LONG).show()
-                    } else {
-                        model.addToFavourites(_movie)
-                        Snackbar.make(view,"Added to favourite list", Snackbar.LENGTH_LONG).show()
-                    }
-                }
-
-                buttonRemove.setOnClickListener {
-                    var movieID = _movie.movie_id
-                    if (model.checkDuplicate(movieID!!)) {
-                        Snackbar.make(view,"Removed from favourite list", Snackbar.LENGTH_LONG).show()
-                        model.removeFromFavourites(_movie)
-                    } else {
-                        Snackbar.make(view,"Not in favourite list", Snackbar.LENGTH_LONG).show()
-                    }
-                }
-            })
+            }
+        )
     }
-
-
 
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
 
@@ -111,15 +90,23 @@ class MovieDetailsFragment : Fragment() {
                 return true
             }
             R.id.favourite_icon -> {
-
-                if (item.isChecked) {
-                    item.setIcon(R.drawable.ic_baseline_favorite_border_24)
-                    item.isChecked = false
+                if (model.checkDuplicate(_movie.movie_id!!)) {
+                    Snackbar.make(requireView(),"Already In Favourite List!", Snackbar.LENGTH_LONG).show()
                 } else {
-                    item.setIcon(R.drawable.ic_baseline_favorite_24)
-                    item.isChecked = true
+                    model.addToFavourites(_movie)
+                    Snackbar.make(requireView(),"Added to favourite list", Snackbar.LENGTH_LONG).show()
                 }
-                // to implement this feature
+
+                return true
+            }
+            R.id.remove_icon -> {
+                if (model.checkDuplicate(_movie.movie_id!!)) {
+                    Snackbar.make(requireView(),"Removed from favourite list", Snackbar.LENGTH_LONG).show()
+                    model.removeFromFavourites(_movie)
+                } else {
+                    Snackbar.make(requireView(),"Not in favourite list", Snackbar.LENGTH_LONG).show()
+                }
+
                 return true
             }
             else -> super.onOptionsItemSelected(item)
@@ -186,6 +173,13 @@ class MovieDetailsFragment : Fragment() {
     private fun setTitle(movie_title: String?) {
         val movieTitle = requireView().findViewById<TextView>(R.id.movies_details_original_title)
         movieTitle.text = movie_title
+    }
+
+    private fun setMovieTags(genres: ArrayList<Genre>) {
+
+        val mainAdapter = MovieTagAdapter(this@MovieDetailsFragment, genres)
+        gridView = requireView().findViewById(R.id.movie_tag_view)
+        gridView.adapter = mainAdapter
     }
 
 }
