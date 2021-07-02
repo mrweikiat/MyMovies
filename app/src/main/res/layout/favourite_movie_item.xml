@@ -11,7 +11,8 @@
         android:id="@+id/imageView"
         android:layout_width="match_parent"
         android:layout_height="300sp"
-        android:scaleType="fitXY"/>
+        android:scaleType="fitXY"
+        android:background="@drawable/gridview_layout_top"/>
     <TextView
         android:textAlignment="center"
         android:gravity="center"
@@ -21,5 +22,6 @@
         android:text="Numbers"
         android:textColor="@color/white"
         android:fontFamily="sans-serif"
-        android:background="@color/colorLightGrey"/>
+        android:textSize="13dp"
+        android:background="@drawable/gridview_layout_bottom"/>
 </LinearLayout>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layer-list xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item>
+        <shape>
+            <!-- set the shadow color here -->
+            <stroke
+                android:width="2dp"
+                android:color="#7000" />
+
+            <!-- setting the thickness of shadow (positive value will give shadow on that side) -->
+            <padding
+                android:left="2dp"
+                android:right="-1dp"
+                android:top="-1dp" />
+            <corners
+                android:topLeftRadius="@dimen/radius_movie_item"
+                android:topRightRadius="@dimen/radius_movie_item"/>
+        </shape>
+    </item>
+
+    <item>
+        <shape>
+            <corners
+                android:topLeftRadius="@dimen/radius_movie_item"
+                android:topRightRadius="@dimen/radius_movie_item"/>
+            <solid android:color="@color/colorBackGroundGrey"/>
+        </shape>
+    </item>
+
+</layer-list>
