@@ -3,20 +3,16 @@ package com.example.mymovies.ui.discover
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import com.example.mymovies.Genre
 import com.example.mymovies.Movie
 import com.example.mymovies.ui.discover.NowPlayingPage.getNowPlayingPage
 import com.example.mymovies.ui.discover.PopularPage.getPopularPage
 import com.example.mymovies.ui.discover.TopRatedPage.getTopRatedPage
-import com.example.mymovies.ui.MovieDetails.GetMovieFromId.getMovieFromId
 
 class DiscoverViewModel : ViewModel() {
 
     var moviesData : MutableLiveData<ArrayList<Movie>> = MutableLiveData(arrayListOf())
     var favouriteMoviesData : MutableLiveData<ArrayList<Movie>> = MutableLiveData(arrayListOf())
     var movie = MutableLiveData<Movie>()
-    var movieTags : MutableLiveData<ArrayList<Genre>> = MutableLiveData(arrayListOf())
-    var movieHolder = MutableLiveData<Movie>()
 
     fun getMovies(): LiveData<ArrayList<Movie>>? {
        moviesData = getPopularPage()
@@ -33,14 +29,8 @@ class DiscoverViewModel : ViewModel() {
         return moviesData
     }
 
-    fun clearList(){
-        moviesData = MutableLiveData(arrayListOf())
-    }
-
     fun setSelectedMovie(index: Int, list: ArrayList<Movie>) {
         var _movie = list[index]
-        val id = _movie.movie_id!!.toInt()
-        movieHolder = getMovieFromId(id)
         movie.value = _movie
     }
 
@@ -65,8 +55,14 @@ class DiscoverViewModel : ViewModel() {
         favouriteMoviesData.value = movieList
     }
 
+    // getters to return movie list data
     fun getMovieList(): ArrayList<Movie> {
         return moviesData.value!!
+    }
+
+    // getter to return favourite list data
+    fun getFavouriteMovieList(): ArrayList<Movie> {
+        return favouriteMoviesData.value!!
     }
 
 }

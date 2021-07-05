@@ -15,13 +15,11 @@ import com.example.mymovies.R
 import com.example.mymovies.ui.discover.DiscoverViewModel
 import com.google.android.material.snackbar.Snackbar
 
-
 class MovieDetailsFragment : Fragment() {
 
-
-    private var image_URL = "https://image.tmdb.org/t/p/original"
+    private var imageURL = "https://image.tmdb.org/t/p/original"
     private lateinit var model: DiscoverViewModel
-    private lateinit var _movie: Movie
+    private lateinit var movie: Movie
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -44,7 +42,8 @@ class MovieDetailsFragment : Fragment() {
         (activity as AppCompatActivity).supportActionBar?.title = ""
         (activity as AppCompatActivity).supportActionBar?.setDisplayHomeAsUpEnabled(true)
         (activity as AppCompatActivity).supportActionBar?.setDisplayShowHomeEnabled(true)
-        (activity as AppCompatActivity).supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
+        (activity as AppCompatActivity).supportActionBar
+            ?.setBackgroundDrawable(ColorDrawable(Color.TRANSPARENT))
 
         return inflater.inflate(R.layout.movies_details, container, false)
 
@@ -56,20 +55,10 @@ class MovieDetailsFragment : Fragment() {
 
         model.movie.observe(
             viewLifecycleOwner, Observer {
-                movie ->
-
-                _movie = movie
-                setMovieRating(movie.rating!!)
-                setMovieTags(movie.genre_ids!!)
-                setBackDropImage(movie.backdrop!!)
-                setPosterImage(movie.poster!!)
-                setMovieDescription(movie.overview!!)
-                setMovieLanguage(movie.language!!)
-                setMovieReleaseDate(movie.releaseDate!!)
-                setMovieID(movie.movie_id!!)
-                setVoteCount(movie.vote_count!!)
-                setTitle(movie.title!!)
-
+                _movie ->
+                // move the setters to another method
+                movie = _movie
+                setMovie()
             }
         )
     }
@@ -82,21 +71,25 @@ class MovieDetailsFragment : Fragment() {
                 return true
             }
             R.id.favourite_icon -> {
-                if (model.checkDuplicate(_movie.movie_id!!)) {
-                    Snackbar.make(requireView(),"Already In Favourite List!", Snackbar.LENGTH_LONG).show()
+                if (model.checkDuplicate(movie.movie_id!!)) {
+                    Snackbar.make(requireView(),"Already In Favourite List!",
+                        Snackbar.LENGTH_LONG).show()
                 } else {
-                    model.addToFavourites(_movie)
-                    Snackbar.make(requireView(),"Added to favourite list", Snackbar.LENGTH_LONG).show()
+                    model.addToFavourites(movie)
+                    Snackbar.make(requireView(),"Added to favourite list",
+                        Snackbar.LENGTH_LONG).show()
                 }
 
                 return true
             }
             R.id.remove_icon -> {
-                if (model.checkDuplicate(_movie.movie_id!!)) {
-                    Snackbar.make(requireView(),"Removed from favourite list", Snackbar.LENGTH_LONG).show()
-                    model.removeFromFavourites(_movie)
+                if (model.checkDuplicate(movie.movie_id!!)) {
+                    Snackbar.make(requireView(),"Removed from favourite list",
+                        Snackbar.LENGTH_LONG).show()
+                    model.removeFromFavourites(movie)
                 } else {
-                    Snackbar.make(requireView(),"Not in favourite list", Snackbar.LENGTH_LONG).show()
+                    Snackbar.make(requireView(),"Not in favourite list",
+                        Snackbar.LENGTH_LONG).show()
                 }
 
                 return true
@@ -105,13 +98,27 @@ class MovieDetailsFragment : Fragment() {
         }
     }
 
-    private fun setMovieRating(movieRating: String) {
-        val movie_rating = requireView().findViewById<TextView>(R.id.movie_details_rating)
+    // method to set all the data up
+    private fun setMovie() {
+        setMovieRating(movie.rating!!)
+        setMovieTags(movie.genreIds!!)
+        setBackDropImage(movie.backdrop!!)
+        setPosterImage(movie.poster!!)
+        setMovieDescription(movie.overview!!)
+        setMovieLanguage(movie.language!!)
+        setMovieReleaseDate(movie.releaseDate!!)
+        setMovieID(movie.movie_id!!)
+        setVoteCount(movie.voteCount!!)
+        setTitle(movie.title!!)
+    }
 
-        if (movieRating.toDouble() < 1.0) {
-            movie_rating.text = "TBC"
+    private fun setMovieRating(_movieRating: String) {
+        val movieRating = requireView().findViewById<TextView>(R.id.movie_details_rating)
+
+        if (_movieRating.toDouble() < 1.0) {
+            movieRating.text = "TBC"
         } else {
-            movie_rating.text = "$movieRating"
+            movieRating.text = "$_movieRating"
         }
     }
 
@@ -120,7 +127,7 @@ class MovieDetailsFragment : Fragment() {
 
         // load img using glide
         Glide.with(this)
-            .load(image_URL + movieBackDropPath)
+            .load(imageURL + movieBackDropPath)
             .into(movieDetailsImage)
     }
 
@@ -128,33 +135,33 @@ class MovieDetailsFragment : Fragment() {
         var movieDetailsPoster = requireView().findViewById<ImageView>(R.id.movies_details_poster)
 
         Glide.with(this)
-            .load(image_URL + moviePosterPath)
+            .load(imageURL + moviePosterPath)
             .into(movieDetailsPoster)
     }
 
-    private fun setMovieDescription(movieDescription: String) {
-        val movie_description = requireView().findViewById<TextView>(R.id.movie_details_description)
-        movie_description.text = movieDescription
+    private fun setMovieDescription(_movieDescription: String) {
+        val movieDescription = requireView().findViewById<TextView>(R.id.movie_details_description)
+        movieDescription.text = _movieDescription
     }
 
-    private fun setMovieLanguage(movieLanguage: String) {
-        val movie_language = requireView().findViewById<TextView>(R.id.movie_details_language)
-        movie_language.text = "$movieLanguage"
+    private fun setMovieLanguage(_movieLanguage: String) {
+        val movieLanguage = requireView().findViewById<TextView>(R.id.movie_details_language)
+        movieLanguage.text = "$_movieLanguage"
     }
 
-    private fun setMovieReleaseDate(movieReleaseDate: String) {
-        val movie_release_date = requireView().findViewById<TextView>(R.id.movie_details_release_date)
-        movie_release_date.text = "$movieReleaseDate"
+    private fun setMovieReleaseDate(_movieReleaseDate: String) {
+        val movieReleaseDate = requireView().findViewById<TextView>(R.id.movie_details_release_date)
+        movieReleaseDate.text = "$_movieReleaseDate"
     }
 
     private fun setMovieID(movie_id: String?) {
-        val movie_ID = requireView().findViewById<TextView>(R.id.movie_details_movie_id)
-        movie_ID.text = "Movie ID: ${movie_id.toString()}"
+        val movieId = requireView().findViewById<TextView>(R.id.movie_details_movie_id)
+        movieId.text = "Movie ID: ${movie_id.toString()}"
     }
 
     private fun setVoteCount(movie_count: String?) {
-        val movie_vote_count = requireView().findViewById<TextView>(R.id.movie_details_votes)
-        movie_vote_count.text = "$movie_count votes"
+        val movieCount = requireView().findViewById<TextView>(R.id.movie_details_votes)
+        movieCount.text = "$movie_count votes"
     }
 
     private fun setTitle(movie_title: String?) {

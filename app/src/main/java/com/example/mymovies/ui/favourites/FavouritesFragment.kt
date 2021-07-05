@@ -23,10 +23,10 @@ class FavouritesFragment : Fragment() {
     private var _binding: FragmentFavouritesBinding? = null
 
     private lateinit var gridView: GridView
-    private var image_URL = "https://image.tmdb.org/t/p/original"
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    // create class level adapter
+    private lateinit var myFavouriteAdapter: MyFavouriteAdapter
+    // create class level shareVM
+    private lateinit var model: DiscoverViewModel
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -34,38 +34,37 @@ class FavouritesFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         (activity as AppCompatActivity)
-            .supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#212121")))
+            .supportActionBar?.setBackgroundDrawable(ColorDrawable(Color
+                .parseColor("#212121")))
 
         return inflater.inflate(R.layout.fragment_favourites, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        val model = ViewModelProvider(requireActivity())
-            .get(DiscoverViewModel::class.java)
+        model = ViewModelProvider(requireActivity()).get(DiscoverViewModel::class.java)
+        // move gridView out of observe method
+        gridView = view.findViewById(R.id.gridViewFavourite)
 
         model.favouriteMoviesData?.observe(
             viewLifecycleOwner, Observer {
                     MoviesData ->
 
-                // adapter for movie list
-                val mainAdapter = MyFavouriteAdapter(this@FavouritesFragment, MoviesData)
-                gridView = view.findViewById(R.id.gridViewFavourite)
-                gridView.adapter = mainAdapter
+                myFavouriteAdapter = MyFavouriteAdapter(this@FavouritesFragment, MoviesData)
+                gridView.adapter = myFavouriteAdapter
 
-                gridView.onItemClickListener = AdapterView.OnItemClickListener {
-                        parent,
-                        view: View,
-                        position: Int,
-                        id: Long ->
-                    val action = FavouritesFragmentDirections
-                        .actionNavigationFavouritesToMovieDetailsFragment()
-
-                    model.setSelectedMovie(position, MoviesData)
-                    view.findNavController().navigate(action)
-                }
             }
         )
+        // move item click listener out of observe method
+        gridView.onItemClickListener = AdapterView
+            .OnItemClickListener { _, view: View, position: Int, _: Long ->
+
+            val action = FavouritesFragmentDirections
+                .actionNavigationFavouritesToMovieDetailsFragment()
+
+            model.setSelectedMovie(position, model.getFavouriteMovieList())
+            view.findNavController().navigate(action)
+        }
     }
 
     override fun onDestroyView() {

@@ -32,15 +32,8 @@ class Movie {
     @SerializedName("release_date")
     var releaseDate: String? = null
     @SerializedName("vote_count")
-    var vote_count: String? = null
-    @SerializedName("genres")
-    var genres = ArrayList<Genre>()
+    var voteCount: String? = null
     @SerializedName("genre_ids")
-    var genre_ids: ArrayList<String>? = null
+    var genreIds: ArrayList<String>? = null
 
-}
-
-class Genre {
-    @SerializedName("name")
-    var tag_name : String? = null
 }
