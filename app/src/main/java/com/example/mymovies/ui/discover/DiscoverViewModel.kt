@@ -65,4 +65,8 @@ class DiscoverViewModel : ViewModel() {
         favouriteMoviesData.value = movieList
     }
 
+    fun getMovieList(): ArrayList<Movie> {
+        return moviesData.value!!
+    }
+
 }

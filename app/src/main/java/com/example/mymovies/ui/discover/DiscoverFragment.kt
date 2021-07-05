@@ -19,10 +19,10 @@ class DiscoverFragment : Fragment() {
     private lateinit var discoverViewModel: DiscoverViewModel
     private var _binding: FragmentDiscoverBinding? = null
     private lateinit var gridView: GridView
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
-    private val binding get() = _binding!!
+    // Change mainAdapter to class level variable so
+    // we dont need to create a new adapter everytime sort flags
+    // are called
+    private lateinit var mainAdapter: MainAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -36,9 +36,11 @@ class DiscoverFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        // Moved this method out of observe
+        setHasOptionsMenu(true)
         discoverViewModel = ViewModelProvider(requireActivity()).get(DiscoverViewModel::class.java)
+        gridView = view.findViewById(R.id.gridView)
 
-        // initial loadup
         if (discoverViewModel.moviesData.value!!.isEmpty()) {
             discoverViewModel.getMovies()
         }
@@ -46,23 +48,21 @@ class DiscoverFragment : Fragment() {
         discoverViewModel.moviesData.observe(
             viewLifecycleOwner,
             Observer { newMovieData ->
-
-                gridView = view.findViewById(R.id.gridView)
-                val mainAdapter = MainAdapter(this@DiscoverFragment, newMovieData)
+                mainAdapter = MainAdapter(this@DiscoverFragment, newMovieData)
                 gridView.adapter = mainAdapter
-
-
-                // for options sorting
-                setHasOptionsMenu(true)
-
-                gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
-                    val action = DiscoverFragmentDirections.actionNavigationDiscoverToMovieDetailsFragment()
-                    discoverViewModel.setSelectedMovie(position, newMovieData)
-                    view.findNavController().navigate(action)
-                }
-
             }
         )
+
+        // move click listener out of observe
+        // so we dont call everytime observe
+        // method is called. Also removed
+        // redundant variables in clickListener
+        gridView.onItemClickListener = AdapterView.OnItemClickListener { _, view: View, position: Int, _: Long ->
+            val action = DiscoverFragmentDirections.actionNavigationDiscoverToMovieDetailsFragment()
+            discoverViewModel.setSelectedMovie(position, discoverViewModel.getMovieList())
+            view.findNavController().navigate(action)
+        }
+
     }
 
     override fun onDestroyView() {
@@ -96,63 +96,38 @@ class DiscoverFragment : Fragment() {
         }
     }
 
-
     // fun to re-populate gridview to top rated movies
     private fun makeTopRatedMoviesList() {
-
-        discoverViewModel.clearList()
-
         discoverViewModel.getTopRatedMovies()!!.observe(
             viewLifecycleOwner,
             Observer { newMovieData ->
-                val mainAdapter = MainAdapter(this@DiscoverFragment, newMovieData)
+                mainAdapter = MainAdapter(this@DiscoverFragment, newMovieData)
                 gridView.adapter = mainAdapter
-
-                gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
-                    val action = DiscoverFragmentDirections.actionNavigationDiscoverToMovieDetailsFragment()
-                    discoverViewModel.setSelectedMovie(position, newMovieData)
-                    view.findNavController().navigate(action)
-                }
+                // removed redundant onClickListener in this method
             }
         )
-
     }
 
     // fun to re-populate gridview to popular movies
     private fun makePopularMoviesList() {
-        discoverViewModel.clearList()
-
         discoverViewModel.getMovies()!!.observe(
             viewLifecycleOwner,
             Observer { newMovieData ->
-                val mainAdapter = MainAdapter(this@DiscoverFragment, newMovieData)
+                mainAdapter = MainAdapter(this@DiscoverFragment, newMovieData)
                 gridView.adapter = mainAdapter
-
-                gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
-                    val action = DiscoverFragmentDirections.actionNavigationDiscoverToMovieDetailsFragment()
-                    discoverViewModel.setSelectedMovie(position, newMovieData)
-                    view.findNavController().navigate(action)
-                }
+                // removed redundant onClickListener in this method
             }
         )
     }
 
-    // fun to re-populate gridview to popular movies
+    // fun to re-populate gridview to now playing movies
     private fun makeNowPlayingMoviesList() {
-
-        discoverViewModel.clearList()
-
         discoverViewModel.getNowPlayingMovies()!!.observe(
             viewLifecycleOwner,
             Observer { newMovieData ->
-                val mainAdapter = MainAdapter(this@DiscoverFragment, newMovieData)
+                mainAdapter = MainAdapter(this@DiscoverFragment, newMovieData)
                 gridView.adapter = mainAdapter
-
-                gridView.onItemClickListener = AdapterView.OnItemClickListener { parent, view: View, position: Int, id: Long ->
-                    val action = DiscoverFragmentDirections.actionNavigationDiscoverToMovieDetailsFragment()
-                    discoverViewModel.setSelectedMovie(position, newMovieData)
-                    view.findNavController().navigate(action)
-                }
+                // removed redundant onClickListener in this method
             }
         )
     }
