@@ -62,7 +62,6 @@ class DiscoverFragment : Fragment() {
             discoverViewModel.setSelectedMovie(position, discoverViewModel.getMovieList())
             view.findNavController().navigate(action)
         }
-
     }
 
     override fun onDestroyView() {
