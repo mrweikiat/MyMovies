@@ -14,10 +14,10 @@ import com.example.mymovies.Movie
 import com.example.mymovies.R
 import com.google.android.material.snackbar.Snackbar
 
-class RecyclerFavouriteAdapter(private val movieList: ArrayList<Movie>):
+class RecyclerFavouriteAdapter(private val movieList: ArrayList<Movie>, val onItemClicked:(Movie) -> Unit):
     RecyclerView.Adapter<RecyclerFavouriteAdapter.ViewHolder>() {
 
-    private var image_URL = "https://image.tmdb.org/t/p/original"
+    private var imageURL = "https://image.tmdb.org/t/p/original"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
@@ -28,7 +28,7 @@ class RecyclerFavouriteAdapter(private val movieList: ArrayList<Movie>):
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         holder.textView.text = movieList[position].title
-        var imagePath = image_URL + movieList[position].poster
+        var imagePath = imageURL + movieList[position].poster
         var image = holder.imageView
         // load img using glide
         Glide.with(image)
@@ -36,10 +36,8 @@ class RecyclerFavouriteAdapter(private val movieList: ArrayList<Movie>):
             .into(image)
 
         holder.itemView.setOnClickListener {
-            Snackbar.make(it,"Hi",
-                Snackbar.LENGTH_LONG).show()
+            onItemClicked(movieList[position])
         }
-
 
     }
 
@@ -47,11 +45,10 @@ class RecyclerFavouriteAdapter(private val movieList: ArrayList<Movie>):
         return movieList.size
     }
 
-
-    class ViewHolder(view: View): RecyclerView.ViewHolder(view)  {
+    class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
         val textView: TextView = view.findViewById(R.id.text_view_recycler)
         val imageView: ImageView = view.findViewById(R.id.image_view_recycler)
 
     }
-
 }
+

@@ -34,6 +34,12 @@ class DiscoverViewModel : ViewModel() {
         movie.value = _movie
     }
 
+    // method to update the VM using a movie from callback
+    fun setSelectedMovieRV(m: Movie) {
+        var _movie = m
+        movie.value = _movie
+    }
+
     fun addToFavourites(movie: Movie) {
         var movieList = favouriteMoviesData.value
         movieList!!.add(movie)
