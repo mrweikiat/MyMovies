@@ -4,13 +4,14 @@ import android.graphics.Color
 import android.graphics.drawable.ColorDrawable
 import android.os.Bundle
 import android.view.*
-import android.widget.AdapterView
-import android.widget.GridView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.RecyclerView
+import com.example.mymovies.Movie
 import com.example.mymovies.R
 import com.example.mymovies.databinding.FragmentDiscoverBinding
 
@@ -18,11 +19,10 @@ class DiscoverFragment : Fragment() {
 
     private lateinit var discoverViewModel: DiscoverViewModel
     private var _binding: FragmentDiscoverBinding? = null
-    private lateinit var gridView: GridView
-    // Change mainAdapter to class level variable so
-    // we dont need to create a new adapter everytime sort flags
-    // are called
-    private lateinit var mainAdapter: MainAdapter
+
+    // gridlayout recycler view
+    private lateinit var recyclerDiscoverAdapter: RecyclerDiscoverAdapter
+    private lateinit var recyclerView: RecyclerView
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -30,16 +30,16 @@ class DiscoverFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         (activity as AppCompatActivity).supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#212121")))
-        return inflater.inflate(R.layout.fragment_discover, container, false)
+        return inflater.inflate(R.layout.layout_fragment_discover, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        // Moved this method out of observe
         setHasOptionsMenu(true)
         discoverViewModel = ViewModelProvider(requireActivity()).get(DiscoverViewModel::class.java)
-        gridView = view.findViewById(R.id.gridView)
+        recyclerView = view.findViewById(R.id.recycler_view_discover) as RecyclerView
+        recyclerView.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
 
         if (discoverViewModel.moviesData.value!!.isEmpty()) {
             discoverViewModel.getMovies()
@@ -48,20 +48,10 @@ class DiscoverFragment : Fragment() {
         discoverViewModel.moviesData.observe(
             viewLifecycleOwner,
             Observer { newMovieData ->
-                mainAdapter = MainAdapter(this@DiscoverFragment, newMovieData)
-                gridView.adapter = mainAdapter
+                recyclerDiscoverAdapter = RecyclerDiscoverAdapter(newMovieData, ::onItemClick)
+                recyclerView.adapter = recyclerDiscoverAdapter
             }
         )
-
-        // move click listener out of observe
-        // so we dont call everytime observe
-        // method is called. Also removed
-        // redundant variables in clickListener
-        gridView.onItemClickListener = AdapterView.OnItemClickListener { _, view: View, position: Int, _: Long ->
-            val action = DiscoverFragmentDirections.actionNavigationDiscoverToMovieDetailsFragment()
-            discoverViewModel.setSelectedMovie(position, discoverViewModel.getMovieList())
-            view.findNavController().navigate(action)
-        }
     }
 
     override fun onDestroyView() {
@@ -100,8 +90,8 @@ class DiscoverFragment : Fragment() {
         discoverViewModel.getTopRatedMovies()!!.observe(
             viewLifecycleOwner,
             Observer { newMovieData ->
-                mainAdapter = MainAdapter(this@DiscoverFragment, newMovieData)
-                gridView.adapter = mainAdapter
+                recyclerDiscoverAdapter = RecyclerDiscoverAdapter(newMovieData, ::onItemClick)
+                recyclerView.adapter = recyclerDiscoverAdapter
                 // removed redundant onClickListener in this method
             }
         )
@@ -112,8 +102,8 @@ class DiscoverFragment : Fragment() {
         discoverViewModel.getMovies()!!.observe(
             viewLifecycleOwner,
             Observer { newMovieData ->
-                mainAdapter = MainAdapter(this@DiscoverFragment, newMovieData)
-                gridView.adapter = mainAdapter
+                recyclerDiscoverAdapter = RecyclerDiscoverAdapter(newMovieData, ::onItemClick)
+                recyclerView.adapter = recyclerDiscoverAdapter
                 // removed redundant onClickListener in this method
             }
         )
@@ -124,10 +114,16 @@ class DiscoverFragment : Fragment() {
         discoverViewModel.getNowPlayingMovies()!!.observe(
             viewLifecycleOwner,
             Observer { newMovieData ->
-                mainAdapter = MainAdapter(this@DiscoverFragment, newMovieData)
-                gridView.adapter = mainAdapter
+                recyclerDiscoverAdapter = RecyclerDiscoverAdapter(newMovieData, ::onItemClick)
+                recyclerView.adapter = recyclerDiscoverAdapter
                 // removed redundant onClickListener in this method
             }
         )
+    }
+
+    private fun onItemClick(movie: Movie) {
+        val action = DiscoverFragmentDirections.actionNavigationDiscoverToMovieDetailsFragment()
+        discoverViewModel.setSelectedMovieRV(movie)
+        requireView().findNavController().navigate(action)
     }
 }

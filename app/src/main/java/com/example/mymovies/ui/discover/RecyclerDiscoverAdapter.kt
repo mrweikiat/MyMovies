@@ -1,4 +1,4 @@
-package com.example.mymovies.ui.favourites
+package com.example.mymovies.ui.discover
 
 import android.view.LayoutInflater
 import android.view.View
@@ -10,15 +10,15 @@ import com.bumptech.glide.Glide
 import com.example.mymovies.Movie
 import com.example.mymovies.R
 
-class RecyclerFavouriteAdapter(private val movieList: ArrayList<Movie>, val onItemClicked:(Movie) -> Unit):
-    RecyclerView.Adapter<RecyclerFavouriteAdapter.ViewHolder>() {
+class RecyclerDiscoverAdapter(private val movieList: ArrayList<Movie>, val onItemClicked:(Movie) -> Unit):
+    RecyclerView.Adapter<RecyclerDiscoverAdapter.ViewHolder>() {
 
     private var imageURL = "https://image.tmdb.org/t/p/original"
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
 
         val view = LayoutInflater.from(parent.context)
-            .inflate(R.layout.layout_fragment_favourites_item, parent, false)
+            .inflate(R.layout.layout_fragment_discover_item, parent, false)
         return ViewHolder(view)
     }
 
@@ -34,7 +34,6 @@ class RecyclerFavouriteAdapter(private val movieList: ArrayList<Movie>, val onIt
         holder.itemView.setOnClickListener {
             onItemClicked(movieList[position])
         }
-
     }
 
     override fun getItemCount(): Int {
@@ -42,9 +41,8 @@ class RecyclerFavouriteAdapter(private val movieList: ArrayList<Movie>, val onIt
     }
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
-        val textView: TextView = view.findViewById(R.id.text_view_recycler)
-        val imageView: ImageView = view.findViewById(R.id.image_view_recycler)
+        val textView: TextView = view.findViewById(R.id.text_view_recycler_discover)
+        val imageView: ImageView = view.findViewById(R.id.image_view_recycler_discover)
 
     }
 }
-

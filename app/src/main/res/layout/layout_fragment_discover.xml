@@ -8,7 +8,7 @@
     android:paddingBottom="60dp">
 
     <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recycler_view_favourite"
+        android:id="@+id/recycler_view_discover"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="vertical"

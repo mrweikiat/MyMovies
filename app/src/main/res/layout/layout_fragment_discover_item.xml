@@ -7,16 +7,16 @@
     android:background="@color/colorBackGroundGrey">
 
     <ImageView
-        android:id="@+id/image_view_recycler"
+        android:id="@+id/image_view_recycler_discover"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="205dp"
         android:scaleType="fitXY"
         android:background="@drawable/gridview_layout_top"/>
 
     <TextView
         android:textAlignment="center"
         android:gravity="center"
-        android:id="@+id/text_view_recycler"
+        android:id="@+id/text_view_recycler_discover"
         android:layout_width="match_parent"
         android:layout_height="20dp"
         android:text="Numbers"
