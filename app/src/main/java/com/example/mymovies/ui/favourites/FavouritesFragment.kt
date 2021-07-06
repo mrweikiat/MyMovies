@@ -43,11 +43,11 @@ class FavouritesFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         model = ViewModelProvider(requireActivity()).get(DiscoverViewModel::class.java)
         recyclerView = view.findViewById(R.id.recycler_view_favourite) as RecyclerView
-        recyclerView.layoutManager = GridLayoutManager(context, 2, RecyclerView.VERTICAL, false)
+        recyclerView.layoutManager = GridLayoutManager(
+            context, 2, RecyclerView.VERTICAL, false)
 
         model.favouriteMoviesData?.observe(
-            viewLifecycleOwner, Observer {
-                    moviesData ->
+            viewLifecycleOwner, Observer { moviesData ->
                 recyclerFavouriteAdapter = RecyclerFavouriteAdapter(moviesData, ::onItemClick)
                 recyclerView.adapter = recyclerFavouriteAdapter
 
@@ -61,7 +61,8 @@ class FavouritesFragment : Fragment() {
     }
 
     private fun onItemClick(movie: Movie) {
-        val action = FavouritesFragmentDirections.actionNavigationFavouritesToMovieDetailsFragment()
+        val action = FavouritesFragmentDirections
+            .actionNavigationFavouritesToMovieDetailsFragment()
         model.setSelectedMovieRV(movie)
         requireView().findNavController().navigate(action)
     }

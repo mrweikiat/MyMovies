@@ -1,5 +1,6 @@
 package com.example.mymovies.ui.discover
 
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.mymovies.ApiInterface
 import com.example.mymovies.Movie
@@ -16,6 +17,7 @@ object TopRatedPage {
     private val api_key = "a20f630ca428f9f3ad3d5f506f8e5101"
     private val language = "en-US"
     private val pages = arrayOf("1", "2", "3", "4", "5")
+    private var TAG = ""
 
     fun getTopRatedPage(): MutableLiveData<ArrayList<Movie>> {
         val retrofit = Retrofit.Builder()
@@ -41,18 +43,12 @@ object TopRatedPage {
                     }
                 }
                 override fun onFailure(call: Call<Movies>, t: Throwable) {
-                    //TODO (2) consider error message here to log
+                    Log.d(TAG,"Error getting HTTPS request for Top Rated Page")
                 }
             })
         }
 
-
-
         return moviesData
 
     }
-
-
-
-
 }

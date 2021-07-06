@@ -1,8 +1,10 @@
 package com.example.mymovies.ui.discover
+import android.util.Log
 import androidx.lifecycle.MutableLiveData
 import com.example.mymovies.ApiInterface
 import com.example.mymovies.Movie
 import com.example.mymovies.Movies
+import com.google.android.material.snackbar.Snackbar
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
@@ -17,6 +19,7 @@ object NowPlayingPage {
     private val api_key = "a20f630ca428f9f3ad3d5f506f8e5101"
     private val language = "en-US"
     private val pages = arrayOf("1", "2", "3", "4", "5")
+    private var TAG = ""
 
     // function to get default page to show on discover fragment
     fun getNowPlayingPage(): MutableLiveData<ArrayList<Movie>> {
@@ -44,15 +47,12 @@ object NowPlayingPage {
                     }
                 }
                 override fun onFailure(call: Call<Movies>, t: Throwable) {
-                    //TODO (3) consider error message here to log
+                    Log.d(TAG,"Error getting HTTPS request for Now Playing Page")
                 }
             })
-
-
         }
 
         return moviesData
+
     }
-
-
 }

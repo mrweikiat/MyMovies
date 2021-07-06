@@ -29,17 +29,21 @@ class DiscoverFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        (activity as AppCompatActivity).supportActionBar?.setBackgroundDrawable(ColorDrawable(Color.parseColor("#212121")))
+        (activity as AppCompatActivity)
+            .supportActionBar?.setBackgroundDrawable(
+                ColorDrawable(Color.parseColor("#212121")))
+
         return inflater.inflate(R.layout.layout_fragment_discover, container, false)
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
         setHasOptionsMenu(true)
         discoverViewModel = ViewModelProvider(requireActivity()).get(DiscoverViewModel::class.java)
+
         recyclerView = view.findViewById(R.id.recycler_view_discover) as RecyclerView
-        recyclerView.layoutManager = GridLayoutManager(context, 3, RecyclerView.VERTICAL, false)
+        recyclerView.layoutManager = GridLayoutManager(
+            context, 3, RecyclerView.VERTICAL, false)
 
         if (discoverViewModel.moviesData.value!!.isEmpty()) {
             discoverViewModel.getMovies()
@@ -118,6 +122,7 @@ class DiscoverFragment : Fragment() {
         )
     }
 
+    // fun to set curr movie as destination and navigate to fragment
     private fun onItemClick(movie: Movie) {
         val action = DiscoverFragmentDirections.actionNavigationDiscoverToMovieDetailsFragment()
         discoverViewModel.setSelectedMovieRV(movie)
