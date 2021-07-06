@@ -29,12 +29,7 @@ class DiscoverViewModel : ViewModel() {
         return moviesData
     }
 
-    fun setSelectedMovie(index: Int, list: ArrayList<Movie>) {
-        var _movie = list[index]
-        movie.value = _movie
-    }
-
-    // method to update the VM using a movie from callback
+        // method to update the VM using a movie from callback
     fun setSelectedMovieRV(m: Movie) {
         var _movie = m
         movie.value = _movie
@@ -60,15 +55,4 @@ class DiscoverViewModel : ViewModel() {
         movieList!!.remove(_movie)
         favouriteMoviesData.value = movieList
     }
-
-    // getters to return movie list data
-    fun getMovieList(): ArrayList<Movie> {
-        return moviesData.value!!
-    }
-
-    // getter to return favourite list data
-    fun getFavouriteMovieList(): ArrayList<Movie> {
-        return favouriteMoviesData.value!!
-    }
-
 }

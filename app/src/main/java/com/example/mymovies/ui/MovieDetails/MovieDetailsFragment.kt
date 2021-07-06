@@ -102,7 +102,10 @@ class MovieDetailsFragment : Fragment() {
     private fun setMovie() {
         setMovieRating(movie.rating!!)
         setMovieTags(movie.genreIds!!)
-        setBackDropImage(movie.backdrop!!)
+
+        if (movie.backdrop != null) {
+            setBackDropImage(movie.backdrop!!)
+        }
         setPosterImage(movie.poster!!)
         setMovieDescription(movie.overview!!)
         setMovieLanguage(movie.language!!)

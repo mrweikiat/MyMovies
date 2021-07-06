@@ -15,12 +15,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mymovies.Movie
 import com.example.mymovies.R
-import com.example.mymovies.databinding.FragmentFavouritesBinding
+import com.example.mymovies.databinding.LayoutFragmentFavouritesBinding
 import com.example.mymovies.ui.discover.DiscoverViewModel
 
 class FavouritesFragment : Fragment() {
 
-    private var _binding: FragmentFavouritesBinding? = null
+    private var _binding: LayoutFragmentFavouritesBinding? = null
     private lateinit var model: DiscoverViewModel
 
     // gridlayout adapter

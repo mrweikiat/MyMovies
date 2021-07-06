@@ -13,12 +13,12 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.mymovies.Movie
 import com.example.mymovies.R
-import com.example.mymovies.databinding.FragmentDiscoverBinding
+import com.example.mymovies.databinding.LayoutFragmentDiscoverBinding
 
 class DiscoverFragment : Fragment() {
 
     private lateinit var discoverViewModel: DiscoverViewModel
-    private var _binding: FragmentDiscoverBinding? = null
+    private var _binding: LayoutFragmentDiscoverBinding? = null
 
     // gridlayout recycler view
     private lateinit var recyclerDiscoverAdapter: RecyclerDiscoverAdapter
@@ -92,7 +92,6 @@ class DiscoverFragment : Fragment() {
             Observer { newMovieData ->
                 recyclerDiscoverAdapter = RecyclerDiscoverAdapter(newMovieData, ::onItemClick)
                 recyclerView.adapter = recyclerDiscoverAdapter
-                // removed redundant onClickListener in this method
             }
         )
     }
@@ -104,7 +103,6 @@ class DiscoverFragment : Fragment() {
             Observer { newMovieData ->
                 recyclerDiscoverAdapter = RecyclerDiscoverAdapter(newMovieData, ::onItemClick)
                 recyclerView.adapter = recyclerDiscoverAdapter
-                // removed redundant onClickListener in this method
             }
         )
     }
@@ -116,7 +114,6 @@ class DiscoverFragment : Fragment() {
             Observer { newMovieData ->
                 recyclerDiscoverAdapter = RecyclerDiscoverAdapter(newMovieData, ::onItemClick)
                 recyclerView.adapter = recyclerDiscoverAdapter
-                // removed redundant onClickListener in this method
             }
         )
     }

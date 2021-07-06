@@ -9,4 +9,5 @@
     <dimen name="linear_layout_textView_margin">10dp</dimen>
     <dimen name="tags_margin_small">6dp</dimen>
     <dimen name="radius_movie_item">3dp</dimen>
+    <dimen name="padding_for_movie_list">3dp</dimen>
 </resources>

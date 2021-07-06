@@ -9,7 +9,7 @@
         android:id="@+id/navigation_discover"
         android:name="com.example.mymovies.ui.discover.DiscoverFragment"
         android:label="@string/title_discover"
-        tools:layout="@layout/fragment_discover" >
+        tools:layout="@layout/layout_fragment_discover" >
         <action
             android:id="@+id/action_navigation_discover_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
@@ -19,7 +19,7 @@
         android:id="@+id/navigation_favourites"
         android:name="com.example.mymovies.ui.favourites.FavouritesFragment"
         android:label="@string/title_favourites"
-        tools:layout="@layout/fragment_favourites" >
+        tools:layout="@layout/layout_fragment_favourites" >
         <action
             android:id="@+id/action_navigation_favourites_to_movieDetailsFragment"
             app:destination="@id/movieDetailsFragment" />
