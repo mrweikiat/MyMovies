@@ -74,6 +74,9 @@ class FavouritesFragment : Fragment() {
                     override fun onQueryTextChange(queryText: String?): Boolean {
 
                         runnable = Runnable {
+
+                            mHandler.removeCallbacksAndMessages(null)
+
                             if (queryText.toString() != null) {
                                 val listToFilter = model.favouriteMoviesData.value
                                 var filteredList = filterBaseOnText(listToFilter, queryText)
@@ -84,6 +87,8 @@ class FavouritesFragment : Fragment() {
                             mHandler.postDelayed(runnable,500)
                         }
                         mHandler.postDelayed(runnable,500)
+
+
 
                         return false
                     }
