@@ -62,11 +62,11 @@ class FavouritesFragment : Fragment() {
 
                 searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
+
                         if (query.toString() != null) {
                             val listToFilter = model.favouriteMoviesData.value
                             var filteredList = filterBaseOnText(listToFilter, query)
-                            recyclerFavouriteAdapter = RecyclerFavouriteAdapter(filteredList, ::onItemClick)
-                            recyclerView.adapter = recyclerFavouriteAdapter
+                            recyclerFavouriteAdapter.refreshList(filteredList)
                         }
 
                         return false
@@ -80,15 +80,11 @@ class FavouritesFragment : Fragment() {
                             if (queryText.toString() != null) {
                                 val listToFilter = model.favouriteMoviesData.value
                                 var filteredList = filterBaseOnText(listToFilter, queryText)
-                                recyclerFavouriteAdapter = RecyclerFavouriteAdapter(filteredList, ::onItemClick)
-                                recyclerView.adapter = recyclerFavouriteAdapter
+                                recyclerFavouriteAdapter.refreshList(filteredList)
                             }
-
-                            mHandler.postDelayed(runnable,500)
                         }
+
                         mHandler.postDelayed(runnable,500)
-
-
 
                         return false
                     }
@@ -110,6 +106,12 @@ class FavouritesFragment : Fragment() {
         val action = FavouritesFragmentDirections
             .actionNavigationFavouritesToMovieDetailsFragment()
         model.setSelectedMovieRV(movie)
+
+        // if movie is clicked
+        // clear string in searchView
+        searchView.setQuery("", false)
+
+
         requireView().findNavController().navigate(action)
     }
 

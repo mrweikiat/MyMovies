@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.mymovies.Movie
 import com.example.mymovies.R
 
-class RecyclerFavouriteAdapter(private val movieList: ArrayList<Movie>, val onItemClicked:(Movie) -> Unit):
+class RecyclerFavouriteAdapter(private var movieList: ArrayList<Movie>, var onItemClicked:(Movie) -> Unit):
     RecyclerView.Adapter<RecyclerFavouriteAdapter.ViewHolder>() {
 
     private var imageURL = "https://image.tmdb.org/t/p/original"
@@ -35,6 +35,11 @@ class RecyclerFavouriteAdapter(private val movieList: ArrayList<Movie>, val onIt
             onItemClicked(movieList[position])
         }
 
+    }
+
+    fun refreshList(list: ArrayList<Movie>) {
+        movieList = list
+        notifyDataSetChanged()
     }
 
     override fun getItemCount(): Int {
