@@ -63,11 +63,9 @@ class FavouritesFragment : Fragment() {
                 searchView.setOnQueryTextListener(object: SearchView.OnQueryTextListener {
                     override fun onQueryTextSubmit(query: String?): Boolean {
 
-                        if (query.toString() != null) {
-                            val listToFilter = model.favouriteMoviesData.value
-                            var filteredList = filterBaseOnText(listToFilter, query)
-                            recyclerFavouriteAdapter.refreshList(filteredList)
-                        }
+                        val listToFilter = model.favouriteMoviesData.value
+                        val filteredList = filterBaseOnText(listToFilter, query)
+                        recyclerFavouriteAdapter.refreshList(filteredList)
 
                         return false
                     }
@@ -77,24 +75,19 @@ class FavouritesFragment : Fragment() {
 
                             mHandler.removeCallbacksAndMessages(null)
 
-                            if (queryText.toString() != null) {
-                                val listToFilter = model.favouriteMoviesData.value
-                                var filteredList = filterBaseOnText(listToFilter, queryText)
-                                recyclerFavouriteAdapter.refreshList(filteredList)
-                            }
+                            val listToFilter = model.favouriteMoviesData.value
+                            val filteredList = filterBaseOnText(listToFilter, queryText)
+                            recyclerFavouriteAdapter.refreshList(filteredList)
+
                         }
 
-                        mHandler.postDelayed(runnable,500)
+                        mHandler.postDelayed(runnable,200)
 
                         return false
                     }
                 })
             }
         )
-
-
-
-
     }
 
     override fun onDestroyView() {
@@ -110,7 +103,6 @@ class FavouritesFragment : Fragment() {
         // if movie is clicked
         // clear string in searchView
         searchView.setQuery("", false)
-
 
         requireView().findNavController().navigate(action)
     }

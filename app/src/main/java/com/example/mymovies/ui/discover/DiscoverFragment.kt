@@ -94,8 +94,7 @@ class DiscoverFragment : Fragment() {
         discoverViewModel.getTopRatedMovies()!!.observe(
             viewLifecycleOwner,
             Observer { newMovieData ->
-                recyclerDiscoverAdapter = RecyclerDiscoverAdapter(newMovieData, ::onItemClick)
-                recyclerView.adapter = recyclerDiscoverAdapter
+                recyclerDiscoverAdapter.refreshList(newMovieData)
             }
         )
     }
@@ -105,19 +104,18 @@ class DiscoverFragment : Fragment() {
         discoverViewModel.getMovies()!!.observe(
             viewLifecycleOwner,
             Observer { newMovieData ->
-                recyclerDiscoverAdapter = RecyclerDiscoverAdapter(newMovieData, ::onItemClick)
-                recyclerView.adapter = recyclerDiscoverAdapter
+                recyclerDiscoverAdapter.refreshList(newMovieData)
             }
         )
     }
 
     // fun to re-populate gridview to now playing movies
     private fun makeNowPlayingMoviesList() {
+
         discoverViewModel.getNowPlayingMovies()!!.observe(
             viewLifecycleOwner,
             Observer { newMovieData ->
-                recyclerDiscoverAdapter = RecyclerDiscoverAdapter(newMovieData, ::onItemClick)
-                recyclerView.adapter = recyclerDiscoverAdapter
+                recyclerDiscoverAdapter.refreshList(newMovieData)
             }
         )
     }

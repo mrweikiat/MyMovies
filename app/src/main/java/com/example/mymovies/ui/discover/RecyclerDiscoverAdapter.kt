@@ -10,7 +10,7 @@ import com.bumptech.glide.Glide
 import com.example.mymovies.Movie
 import com.example.mymovies.R
 
-class RecyclerDiscoverAdapter(private val movieList: ArrayList<Movie>, val onItemClicked:(Movie) -> Unit):
+class RecyclerDiscoverAdapter(private var movieList: ArrayList<Movie>, val onItemClicked:(Movie) -> Unit):
     RecyclerView.Adapter<RecyclerDiscoverAdapter.ViewHolder>() {
 
     private var imageURL = "https://image.tmdb.org/t/p/original"
@@ -38,6 +38,14 @@ class RecyclerDiscoverAdapter(private val movieList: ArrayList<Movie>, val onIte
 
     override fun getItemCount(): Int {
         return movieList.size
+    }
+
+    // remove heavy init of rv during every sorting flag
+    fun refreshList(list: ArrayList<Movie>?) {
+        if (list != null) {
+            movieList = list
+        }
+        notifyDataSetChanged()
     }
 
     class ViewHolder(view: View): RecyclerView.ViewHolder(view) {
