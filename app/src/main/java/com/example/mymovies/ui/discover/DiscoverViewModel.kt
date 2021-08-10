@@ -54,4 +54,10 @@ class DiscoverViewModel : ViewModel() {
         movieList!!.remove(_movie)
         favouriteMoviesData.value = movieList
     }
+
+    // empty data list
+    fun clearMoviesData() {
+        moviesData.value = ArrayList()
+    }
+
 }

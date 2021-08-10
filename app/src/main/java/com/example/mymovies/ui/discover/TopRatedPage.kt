@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory
 
 object TopRatedPage {
     var moviesData = MutableLiveData<ArrayList<Movie>>()
-    private var BASE_URL = "https://api.themoviedb.org/3/movie/"
+    var BASE_URL = "https://api.themoviedb.org/3/movie/"
     private val api_key = "a20f630ca428f9f3ad3d5f506f8e5101"
     private val language = "en-US"
     private val pages = arrayOf("1", "2", "3", "4", "5")

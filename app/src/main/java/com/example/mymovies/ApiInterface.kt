@@ -4,6 +4,7 @@ import retrofit2.http.GET
 import retrofit2.http.Query
 import retrofit2.Call
 import retrofit2.http.Path
+import io.reactivex.Observable
 
 interface ApiInterface {
 
@@ -16,7 +17,15 @@ interface ApiInterface {
     @GET("now_playing?")
     fun getNowPlaying(@Query("api_key")api_key: String, @Query("language")language: String, @Query("page")page: String): Call<Movies>
 
-    @GET("/movie/{movie_id}")
-    fun getMovieUsingId(@Path("movie_id")movie_id: Int, @Query("api_key")api_key: String, @Query("language")language: String): Call<Movie>
+    // RxJava
+
+    @GET("now_playing?")
+    fun getNowPlayingData(@Query("api_key")api_key: String, @Query("language")language: String, @Query("page")page: String): Observable<Movies>
+
+    @GET("top_rated?")
+    fun getTopRatedData(@Query("api_key")api_key: String, @Query("language")language: String, @Query("page")page: String): Observable<Movies>
+
+    @GET("popular")
+    fun getMoviesData(@Query("api_key")api_key: String, @Query("language")language: String, @Query("page")page: String) : Observable<Movies>
 
 }

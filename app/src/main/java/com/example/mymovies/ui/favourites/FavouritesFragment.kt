@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.os.Handler
 import android.view.*
 import android.widget.SearchView
-import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -18,7 +17,6 @@ import com.example.mymovies.Movie
 import com.example.mymovies.R
 import com.example.mymovies.databinding.LayoutFragmentFavouritesBinding
 import com.example.mymovies.ui.discover.DiscoverViewModel
-import com.google.android.material.snackbar.Snackbar
 
 class FavouritesFragment : Fragment() {
 
