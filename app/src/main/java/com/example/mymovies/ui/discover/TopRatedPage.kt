@@ -1,54 +1,30 @@
 package com.example.mymovies.ui.discover
 
-import android.util.Log
-import androidx.lifecycle.MutableLiveData
 import com.example.mymovies.ApiInterface
-import com.example.mymovies.Movie
 import com.example.mymovies.Movies
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
+import io.reactivex.Observable
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 
+
 object TopRatedPage {
-    var moviesData = MutableLiveData<ArrayList<Movie>>()
+
     var BASE_URL = "https://api.themoviedb.org/3/movie/"
     private val api_key = "a20f630ca428f9f3ad3d5f506f8e5101"
     private val language = "en-US"
-    private val pages = arrayOf("1", "2", "3", "4", "5")
-    private var TAG = ""
 
-    fun getTopRatedPage(): MutableLiveData<ArrayList<Movie>> {
-        val retrofit = Retrofit.Builder()
-            .addConverterFactory(GsonConverterFactory.create())
+    fun getTopRatedRequest(): ApiInterface {
+
+        return Retrofit.Builder()
             .baseUrl(BASE_URL)
-            .build()
+            .addConverterFactory(GsonConverterFactory.create())
+            .addCallAdapterFactory(RxJava2CallAdapterFactory.create())
+            .build().create(ApiInterface::class.java)
 
-        val service = retrofit.create(ApiInterface::class.java)
+    }
 
-        for (i in pages.indices) {
-            val call = service.getTopRated(api_key, language, pages[i])
-
-            call.enqueue(object : Callback<Movies> {
-                override fun onResponse(call: Call<Movies>, response: Response<Movies>) {
-                    if (response.code() == 200) {
-                        val movies = response.body()!!
-
-                        val tempList1: ArrayList<Movie> = movies.results
-                        val tempList2 = ArrayList<Movie>()
-                        moviesData.value?.let { tempList2.addAll(it) }
-                        tempList2.addAll(tempList1)
-                        moviesData.value = tempList2
-                    }
-                }
-                override fun onFailure(call: Call<Movies>, t: Throwable) {
-                    Log.d(TAG,"Error getting HTTPS request for Top Rated Page")
-                }
-            })
-        }
-
-        return moviesData
-
+    fun handleTopRatedRequest(request: ApiInterface, page: String): Observable<Movies> {
+        return request.getTopRatedData(api_key, language, page)
     }
 }
