@@ -11,6 +11,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import androidx.room.Room
 import com.example.mymovies.Movie
 import com.example.mymovies.Movies
 import com.example.mymovies.R
@@ -55,6 +56,9 @@ class DiscoverFragment : Fragment() {
         recyclerView = view.findViewById(R.id.recycler_view_discover) as RecyclerView
         recyclerView.layoutManager = GridLayoutManager(
             context, 3, RecyclerView.VERTICAL, false)
+
+        //val dbHelper = DatabaseHelperImpl(DatabaseBuilder.getInstance(requireContext()))
+
 
         if (discoverViewModel.moviesData.value!!.isEmpty()) {
             // RxJava calls to populate an empty data list
@@ -153,7 +157,7 @@ class DiscoverFragment : Fragment() {
                 .subscribe(this::handleMultipleResponse))
         }
 
-        recyclerDiscoverAdapter.refreshList(discoverViewModel.moviesData.value)
+        //recyclerDiscoverAdapter.refreshList(discoverViewModel.moviesData.value)
     }
 
     private fun loadNowPlaying() {
@@ -170,7 +174,7 @@ class DiscoverFragment : Fragment() {
                 .subscribe(this::handleMultipleResponse))
         }
 
-        recyclerDiscoverAdapter.refreshList(discoverViewModel.moviesData.value)
+        //recyclerDiscoverAdapter.refreshList(discoverViewModel.moviesData.value)
 
     }
 
@@ -188,7 +192,7 @@ class DiscoverFragment : Fragment() {
                 .subscribe(this::handleMultipleResponse))
         }
 
-        recyclerDiscoverAdapter.refreshList(discoverViewModel.moviesData.value)
+        //recyclerDiscoverAdapter.refreshList(discoverViewModel.moviesData.value)
 
     }
 

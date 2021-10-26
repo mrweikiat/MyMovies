@@ -1,5 +1,7 @@
 package com.example.mymovies
 
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 import com.google.gson.annotations.SerializedName
 
 class Movies {
@@ -9,31 +11,21 @@ class Movies {
     @SerializedName("results")
     var results = ArrayList<Movie>()
 }
+@Entity (tableName = "movie_details_old")
+data class Movie(
+    @PrimaryKey
+    @field:SerializedName("id") val movie_id: String?,
+    @field:SerializedName("adult") val adult: String?,
+    @field:SerializedName("backdrop_path") val backdrop: String?,
+    @field:SerializedName("original_title") val originalTitle: String?,
+    @field:SerializedName("overview") val overview: String?,
+    @field:SerializedName("poster_path") val poster: String?,
+    @field:SerializedName("title") val title: String?,
+    @field:SerializedName("vote_average") val rating: String?,
+    @field:SerializedName("original_language") val language: String?,
+    @field:SerializedName("release_date") val releaseDate: String?,
+    @field:SerializedName("vote_count") val voteCount: String?,
+    @field:SerializedName("genre_ids") val genreIds: ArrayList<String>?
+)
 
-class Movie {
-    @SerializedName("adult")
-    var adult: String? = null
-    @SerializedName("backdrop_path")
-    var backdrop: String? = null
-    @SerializedName("id")
-    var movie_id : String? = null
-    @SerializedName("original_title")
-    var originalTitle: String? = null
-    @SerializedName("overview")
-    var overview: String? = null
-    @SerializedName("poster_path")
-    var poster: String? = null
-    @SerializedName("title")
-    var title: String? = null
-    @SerializedName("vote_average")
-    var rating: String? = null
-    @SerializedName("original_language")
-    var language: String? = null
-    @SerializedName("release_date")
-    var releaseDate: String? = null
-    @SerializedName("vote_count")
-    var voteCount: String? = null
-    @SerializedName("genre_ids")
-    var genreIds: ArrayList<String>? = null
 
-}
