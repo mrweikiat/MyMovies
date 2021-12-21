@@ -1,12 +1,19 @@
 # MyMovies
 
+### Introduction
+
 - A side project that I decided to embark during my journey as an Android Frontend Software Engineer Intern
 - Worked with Android SDK and written using Kotlin, MyMovies is an Android application that uses The Movie Database (TMDB 3) APIs to allow users to explore all the movies available in the database
+
+### Features
+
 - Some notable features include:
   1) Allowing the user to search movies based on 3 sorting flags - Popular, Top Rated and Now Playing
   2) Allowing the user to view details of the movie (such as Release Date, ratings, synopsis) by clicking on the movie and displaying it in a professional and fun UI
   3) Allowing the user to save the movie by adding it to their favourite list which can them be viewed at a later date
   4) Allowing the user to search through the favourite list for the movies they have favourited so that they do not have to scroll through all the list of movies they added
+  
+### Noteworthy Android components used
   
 - Some notable Android components and third party foundations used include:
     1) Using of a MVVM architecture to hold data
@@ -17,7 +24,20 @@
     6) Communication between fragments and main activities
     7) Designing and implementing professional UI 
     
+ ### Walkthrough
+
+- Some screenshots of what to expect when you use the app
+
+#### Main Page
+![This is an image](https://github.com/mrweikiat/MyMovies/blob/9d31216fd547f15bbd462e7fb26474732d8cac77/app/images/mainPage.png)
+
+#### Using of sorting flags to display movies
+![This is an image](https://github.com/mrweikiat/MyMovies/blob/9d31216fd547f15bbd462e7fb26474732d8cac77/app/images/SortingFlags.png)
     
-    
+#### Movie Details
+![This is an image](https://github.com/mrweikiat/MyMovies/blob/9d31216fd547f15bbd462e7fb26474732d8cac77/app/images/movieDetails.png)
+
+#### Favourite List
+![This is an image](https://github.com/mrweikiat/MyMovies/blob/9d31216fd547f15bbd462e7fb26474732d8cac77/app/images/searchFlag.png)
     
   
