@@ -59,7 +59,6 @@ class DiscoverFragment : Fragment() {
 
         //val dbHelper = DatabaseHelperImpl(DatabaseBuilder.getInstance(requireContext()))
 
-
         if (discoverViewModel.moviesData.value!!.isEmpty()) {
             // RxJava calls to populate an empty data list
             initLoad()
